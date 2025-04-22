@@ -1,0 +1,58 @@
+.leaderboards{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: auto;
+}
+.navigation {
+    display: inline-flex;
+    flex-direction: row;
+    width: 22vw;
+    justify-content: flex-end;
+}
+.team {
+    margin:  0 1rem;
+}
+
+.leader{
+    background-color: #E0EAFC;
+    border: #E0E0E0 2px solid;
+    width: 75vw;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    padding: 4rem;
+    gap: 12em;
+    font-family: "JetBrains Mono", monospace;
+}
+.discover{
+    border: 2px solid #E0E0E0;
+    border-radius: 1.6rem;
+    background-color: #00CED1;
+    padding: 1vw;
+    font-size: 12px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    /* width: 20dvw; */
+  }
+  .titre{
+    width: fit-content;
+    background-color: #FF8C42;
+    padding: 10px;
+    margin: 10px;
+    color: #FFFFFF;
+    border-radius: 1rem;
+  }
+  .info{
+      width: 20vw;
+      color: #FFFFFF;
+      padding: 1vw;
+      /* margin-right: 0.2rem;
+      margin-left: 0.2rem; */
+      /* color: #2C3E50; */
+      margin-bottom: 0.4rem;
+      border-radius: 1rem;
+  }

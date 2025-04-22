@@ -1,0 +1,17 @@
+.footer{
+    position: fixed;
+    bottom: 0;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border: #000 solid 2px;
+}
+.message{
+    color: #fff;
+    background: #000;
+    width: fit-content;
+    padding: 2px;
+}

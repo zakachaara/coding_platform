@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Pinyon+Script&display=swap");
+@import url("https://fonts.cdnfonts.com/css/digital-numbers");
+
+.header {
+  /* position: fixed;
+  top: 0px; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(224, 234, 252, 0.87);
+  min-height: fit-content;
+  width: 100%;
+  padding: 1px;
+  margin: 0;
+}
+.logo {
+  border-radius: 50px;
+  border: 2px solid rgb(0, 206, 209);
+}
+.timer {
+  background-color: rgb(0, 206, 209, 0.87);
+  width: 300px;
+  height: 50px;
+  /* padding: 30px; */
+  border-radius: 25px;
+  color: rgb(51 51 51);
+  font-size: 24px;
+  font-family: "Digital Numbers", sans-serif;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.competition {
+  font-family: "JetBrains Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: bold;
+  font-size: 40px;
+  color: #2c3e50;
+}
+.identity {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 30vw;
+}

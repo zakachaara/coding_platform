@@ -1,0 +1,44 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    height: 40px;
+    font-family: monospace;
+  }
+  
+  .rectangle {
+    width: fit-content;
+    height: 100%;
+    background-color: #FFE100;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    padding-right: 5px; 
+    box-sizing: border-box;
+  }
+  
+  .triangle {
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 35px solid #FFE100;
+    z-index: 2;
+  }
+  .triangle1 {
+
+    width: 0;
+    height: 0;
+    border-top: 20px solid #FFE100;
+    border-bottom: 20px solid #FFE100;
+    border-right: 35px solid transparent;
+    z-index: 2;
+  }
+  
+  .text {
+    color: #2C3E50;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  
