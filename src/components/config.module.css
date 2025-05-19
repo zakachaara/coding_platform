@@ -1,0 +1,89 @@
+.container {
+    font-family: "JetBrains Mono", monospace;
+    background-color: #dceeff;
+    border-radius: 20px;
+    padding: 2rem;
+    width: 50vw;
+    /* margin: 0 auto; */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: #000;
+  }
+  
+  .form_group {
+    display: flex;
+    align-items: center;
+    margin: 0.35rem 0;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .label {
+    width: 120px;
+    font-weight: bold;
+  }
+  
+  .link {
+    text-decoration: underline;
+    color: #0074d9;
+  }
+  
+  .input_text,
+  .input_date,
+  .input_password,
+  .input_file {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    flex: 1;
+    padding: 6px 10px;
+    max-width: 15rem;
+    font-size: .95rem;
+  }
+  
+  .input_file {
+    padding: 4px;
+  }
+  
+  .btn {
+    font-weight: bold;
+    background-color: #ff7c33;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 5rem;
+  }
+  
+  .btn:hover {
+    background-color: #ff5e00;
+  }
+  
+  .section_text {
+    font-weight: bold;
+    margin: 0.5rem 0 0.3rem;
+  }
+  .p_heading{
+    font-style: italic;
+    font-weight: 500;
+    text-decoration: dashed;
+    color: #3863ee;
+  }
+  .upload_list,
+  .all_teams,
+  .add_team {
+    margin-top: 1rem;
+  }
+
+    .action_wrapper {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+      }

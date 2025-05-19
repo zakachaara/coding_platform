@@ -1,0 +1,81 @@
+/* Container */
+.submissionsContainer {
+    /* padding: 20px; */
+    max-width: 40vw;
+    margin: 0 auto;
+  }
+  
+  /* Title */
+  .title {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Table Styles */
+  .submissionsTable {
+    width: 100%;
+    border-collapse: collapse;
+    /* margin-top: 20px; */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .submissionsTable th {
+    background-color: #3b82f6;
+    color: white;
+    padding: 5px;
+    text-align: left;
+  }
+  
+  .submissionsTable td {
+    /* padding: 12px; */
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .submissionsTable tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  /* Verdict Styles */
+  .verdictAccepted {
+    color: #10b981;
+    font-weight: bold;
+  }
+  
+  .verdictRejected {
+    color: #ef4444;
+    font-weight: bold;
+  }
+  
+  .verdictPending {
+    color: #f59e0b;
+    font-weight: bold;
+  }
+  
+  /* Symbol Styles */
+  .symbol {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  .refreshButton {
+    background-color: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.2s;
+  }
+  
+  .refreshButton:hover {
+    background-color: #2563eb;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 20px;
+    color: #647b9b;
+  }
