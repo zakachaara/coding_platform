@@ -2,6 +2,7 @@
 import { useState } from "react";
 import styles from "../page.module.css";
 import { useRouter } from "next/navigation";
+import PopUp from "@/components/PopUp";
 import style from "./admin.module.css";
 export default function admin() {
   const [login, setLogin] = useState("");
@@ -9,13 +10,16 @@ export default function admin() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const [showPopup, setShowPopup] = useState(false);
+  const [SuccessPopup, setSuccessPopup] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
 
     try {
-      const response = await fetch(`${process.env.PUBLIC_NEXT_BASE_URL}/api/users/login`, { // "user" to be changed by "admin"
+      const response = await fetch(`http://localhost:3000/api/auth/admin/login`, { // "user" to be changed by "admin"
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,12 +28,20 @@ export default function admin() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
+        // const errorData = await response.json();
+        throw new Error( "Login failed");
       }
+      const {token} = await response.json()
+      localStorage.setItem("Admin-Auth" , token )
+      setSuccessPopup(true);
+      setTimeout(() => setSuccessPopup(false), 5000);
 
       router.push("/admin/config"); // Redirect on success
+
     } catch (err) {
+      setShowPopup(true);
+    // Hide after 3 seconds
+      setTimeout(() => setShowPopup(false), 5000);
       setError(
         err instanceof Error ? err.message : "An unknown error occurred"
       );
@@ -39,9 +51,11 @@ export default function admin() {
   };
   return (
     <div className={style.container}>
+       {showPopup && <PopUp message={error} type="alert" />}
+       {SuccessPopup && <PopUp message="Login Successfully, Please wait!" type="success" />}
       <form action="" method="post" className={styles.userInfo}>
+     
         <h1> Pre-competition configurations</h1>
-        {error && <div className={styles.error}>{error}</div>}
         <div className={styles.field}>
           <label> Login </label>
           <input

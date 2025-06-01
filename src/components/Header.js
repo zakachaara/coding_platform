@@ -3,7 +3,7 @@ import styles from "./header.module.css";
 import CountDownTimer from "./CountDownTimer";
 export default function CustomHeader (){
     const duration = "04:00";
-    const startingdate = "06-01-2025 16:00";
+    const startingdate = "06-01-2025 20:00";
     return (
         <>
         <div className={styles.header}> 

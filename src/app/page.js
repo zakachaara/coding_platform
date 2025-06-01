@@ -36,15 +36,6 @@ export default function Home() {
       }
       dispatch(setTeam(login));
       const {token} = await response.json();
-      // console.log(token)
-      // const res = NextResponse.json({ success: true });
-      // res.cookies.set('Authorization', token, {
-      //   httpOnly: true,         
-      //   secure: true,           
-      //   sameSite: 'Lax',
-      //   path: '/',
-      //   maxAge: 60 * 60,   // 1 day
-      // });
       localStorage.setItem('Authorization', token); 
       router.push('/home');
       localStorage.setItem("teamName", login);

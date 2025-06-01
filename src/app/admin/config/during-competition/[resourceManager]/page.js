@@ -9,7 +9,7 @@ export default function ResourceManagerPage() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const token = localStorage.getItem('Authorization');
+  const token = localStorage.getItem('Admin-Auth');
 
   // Fetch pending requests filtered by resourceName
   useEffect(() => {
