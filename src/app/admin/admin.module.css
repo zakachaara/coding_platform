@@ -6,6 +6,7 @@
     position: fixed;
     right: 10%;
     top: 15%;
+    margin-top: 10dvh;
     /* border: 2px solid red; */
 }
 .button {

@@ -53,7 +53,7 @@ export default function admin() {
     <div className={style.container}>
        {showPopup && <PopUp message={error} type="alert" />}
        {SuccessPopup && <PopUp message="Login Successfully, Please wait!" type="success" />}
-      <form action="" method="post" className={styles.userInfo}>
+      <form action="" method="post" className={styles.userInfo} >
      
         <h1> Pre-competition configurations</h1>
         <div className={styles.field}>
@@ -85,14 +85,6 @@ export default function admin() {
           {isLoading ? "Processing..." : "Goooo!"}
         </button>
       </form>
-      <div >
-        <h1 className={style.heading}> <i> During competition </i></h1>
-        <div className={style.discover}>
-          <h1 className={style.info}>Capture the Flag</h1>
-          <h1 className={style.info}>Competitive Programming</h1>
-          <h1 className={style.info}>Code Enhancement</h1>
-        </div>
-      </div>
     </div>
   );
 }
