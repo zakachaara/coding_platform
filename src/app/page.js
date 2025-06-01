@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import PopUp from "../components/PopUp";
 import { useDispatch } from 'react-redux';
 import { setTeam } from '../store/slices/teamSlice';
+import { NextResponse } from 'next/server';
 
 export default function Home() {
   const [login, setLogin] = useState("");
@@ -21,7 +22,7 @@ export default function Home() {
     setError("");
     const form = e.target;
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login`, { //use the endpoint of the auth service
+      const response = await fetch(`http://localhost:3000/api/auth/login`, { //use the endpoint of the auth service
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,7 +35,18 @@ export default function Home() {
         throw new Error("Login failed");
       }
       dispatch(setTeam(login));
-      console.log(JSON.stringify(response))
+      const {token} = await response.json();
+      // console.log(token)
+      // const res = NextResponse.json({ success: true });
+      // res.cookies.set('Authorization', token, {
+      //   httpOnly: true,         
+      //   secure: true,           
+      //   sameSite: 'Lax',
+      //   path: '/',
+      //   maxAge: 60 * 60,   // 1 day
+      // });
+      localStorage.setItem('Authorization', token); 
+      router.push('/home');
       localStorage.setItem("teamName", login);
       setSuccessPopup(true);
     // Hide after 3 seconds

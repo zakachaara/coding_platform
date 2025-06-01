@@ -1,8 +1,9 @@
 "use client";
 import { Geist, Geist_Mono } from "next/font/google";
+import { AuthProvider } from "@/context/authContext";
 import CustomHeader from "../components/Header";
 import CustomFooter from "../components/Footer";
-import ClientInitializer from "../components/ClientInitializer"; 
+import ClientInitializer from "../components/ClientInitializer";
 import "./globals.css";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
@@ -29,10 +30,14 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Provider store={store}>
-          <ClientInitializer />
-          <CustomHeader />
-          {children}
-          <CustomFooter />
+          {/* <AuthProvider> */}
+            
+            <ClientInitializer />
+            <CustomHeader />
+            {children}
+            <CustomFooter />
+          {/* </AuthProvider> */}
+
         </Provider>
       </body>
     </html>
