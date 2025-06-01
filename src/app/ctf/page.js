@@ -1,8 +1,11 @@
 import styles from '../home/home.module.css'
 import Card from '../../components/card'
+import TeamNameLeaderBoard from '@/components/teamNameLeaderBoard'
 import Banner from '../../components/banner'
 import Navigator from '../../components/Navigator'
 export default function ctf() {
+  const teamName = "test7357" // change this when you get the actual data
+
   return (
     <>
       <div style={{
@@ -15,11 +18,7 @@ export default function ctf() {
       {/* <Navigator text={'Pb 1'}/>
       <Navigator text={'Pb 2'}/>
       <Navigator text={'Pb 3'}/> */}
-      <div className={styles.navbar}>
-        
-        <a href="/leaderboard"><h2 className={styles.nav}>Leader Board</h2></a>
-        <h2 className={styles.nav}>team_name</h2>
-      </div>
+      <TeamNameLeaderBoard teamName={teamName} />
       </div>
       <div
         style={{

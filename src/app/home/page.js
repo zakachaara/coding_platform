@@ -1,12 +1,13 @@
+'use client';
 import styles from "./home.module.css";
 import Card from "../../components/card";
+import TeamNameLeaderBoard from "../../components/teamNameLeaderBoard";
+import { useSelector } from 'react-redux';
 export default function Home() {
+  const teamName = useSelector((state) => state.team.name);
   return (
     <>
-      <div className={styles.navbar}>
-        <a href="/leaderboard"><h2 className={styles.nav}>Leader Board</h2></a>
-        <h2 className={styles.nav}>team_name</h2>
-      </div>
+      <TeamNameLeaderBoard teamName={teamName} />
       <div style={{marginTop:"10px", display:"flex", alignItems:"center", justifyContent:"center"}}>
         <div className={styles.container}>
           <h1>Rooms</h1>

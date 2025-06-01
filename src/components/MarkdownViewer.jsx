@@ -45,11 +45,17 @@
 import React, { useEffect, useState } from "react";
 import {marked} from "marked";
 
-const MarkdownViewer = ({rawLink}) => {
+const MarkdownViewer = ({problem}) => {
   const [markdown, setMarkdown] = useState("");
-  const link = "https://raw.githubusercontent.com/linneszyx/CP-Problems/refs/heads/master/1-two-sum/README.md"
+  const link = `${process.env.NEXT_PUBLIC_PROBLEM_GETTER_LINK}/readme`
+  // console.log(link)
+  const Headers = {
+    'Content-Type': 'text/html',
+    'x-problem-name': `${problem}`
+  };
   useEffect(() => {
-    fetch(link)
+    fetch(link , {method : 'GET' , headers: Headers
+    })
       .then((res) => res.text())
       .then((text) => setMarkdown(marked.parse(text)))
       .catch((err) => {

@@ -1,7 +1,9 @@
 import Image from "next/image";
 import styles from "./header.module.css";
-
+import CountDownTimer from "./CountDownTimer";
 export default function CustomHeader (){
+    const duration = "04:00";
+    const startingdate = "05-31-2025 12:00";
     return (
         <>
         <div className={styles.header}> 
@@ -17,7 +19,7 @@ export default function CustomHeader (){
           <h1 className={styles.competition}>Coding rooms</h1>
             </div>
             <span className={styles.timer}>
-                TIMER STARTS
+                <CountDownTimer startingDate={startingdate} duration={duration} />
             </span>
         </div>
         </>

@@ -1,14 +1,20 @@
 "use client";
+import { useParams } from 'next/navigation';
 import styles from "../../home/home.module.css";
 import challengestyle from "./challenge.module.css";
 import Banner from "../../../components/banner";
 import Navigator from "../../../components/Navigator";
 import CodeEditor from "@/components/codeEditor";
 import MarkdownViewer from "@/components/MarkdownViewer";
+import TeamNameLeaderBoard from '@/components/teamNameLeaderBoard'
 import { useState } from "react";
 import Issue from "@/components/Issue";
 import Submissions from "@/components/submissions";
+
 export default function challenge() {
+  const teamName = "test7357" // change this when you get the actual data
+  const { challenge } = useParams()
+  const userId = 1 // change this when you get the actual data
   const [showDescription, setShowDescription] = useState(true);
   const [showSubmissions, setShowSubmissions] = useState(false);
   const [showIssues, setShowIssues] = useState(false);
@@ -41,12 +47,8 @@ export default function challenge() {
         {/* <Navigator text={'Pb 1'}/>
       <Navigator text={'Pb 2'}/>
       <Navigator text={'Pb 3'}/> */}
-        <div className={styles.navbar}>
-          <a href="/leaderboard">
-            <h2 className={styles.nav}>Leader Board</h2>
-          </a>
-          <h2 className={styles.nav}>team_name</h2>
-        </div>
+      <div>My Problem name for debug: {challenge}</div>
+        <TeamNameLeaderBoard teamName={teamName} />
       </div>
       <div
         style={{
@@ -79,13 +81,13 @@ export default function challenge() {
             </button> */}
           </div>
           <div className={challengestyle.tab_content}>
-            {showDescription && <MarkdownViewer />}
+            {showDescription && <MarkdownViewer problem={challenge}/>}
             {/* {showIssues && <Issue/>} */}
             {showSubmissions && <Submissions />}
           </div>
         </div>
 
-        <CodeEditor />
+        <CodeEditor problem={challenge} userId={userId} /> 
       </div>
     </>
   );

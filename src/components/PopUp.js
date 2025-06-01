@@ -1,18 +1,15 @@
-export default function PopUp({message}) {
+import style from "./popup.module.css";
+export default function PopUp({message,type}) {
     return(
     <div
         style={{
           position: "absolute",
-          top: "15%",
-          right: 0,
           marginTop: "8px",
           padding: "12px",
-          backgroundColor: "#dcfce7",
-          border: "1px solid #4ade80",
-          color: "#166534",
           borderRadius: "4px",
-          animation: "fadeOut 3s ease-in-out",
+          animation: "fadeOut 5s ease-in-out",
         }}
+        className={style[type]}
       >
         {message}
     </div>

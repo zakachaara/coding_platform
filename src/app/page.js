@@ -1,22 +1,27 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Image from "next/image";
 import styles from "./page.module.css";
+import PopUp from "../components/PopUp";
+import { useDispatch } from 'react-redux';
+import { setTeam } from '../store/slices/teamSlice';
 
 export default function Home() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [SuccessPopup, setSuccessPopup] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-
+    const form = e.target;
     try {
-      const response = await fetch("http://localhost:8080/api/user/login", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login`, { //use the endpoint of the auth service
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,13 +30,22 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
+        // const errorData = await response.json();
+        throw new Error("Login failed");
       }
-
+      dispatch(setTeam(login));
+      console.log(JSON.stringify(response))
+      localStorage.setItem("teamName", login);
+      setSuccessPopup(true);
+    // Hide after 3 seconds
+      setTimeout(() => setSuccessPopup(false), 5000);
       router.push("/home"); // Redirect on success
     } catch (err) {
+      setShowPopup(true);
+    // Hide after 3 seconds
+      setTimeout(() => setShowPopup(false), 5000);
       setError(err instanceof Error ? err.message : "An unknown error occurred");
+      console.log(error)
     } finally {
       setIsLoading(false);
     }
@@ -41,7 +55,10 @@ export default function Home() {
     <div className={styles.page}>
       <form action="" method="post" className={styles.userInfo}>
         <h1> Who are you?</h1>
-        {error && <div className={styles.error}>{error}</div>}
+        {/* {error && <div className={styles.error}>{error}</div>} */}
+        {showPopup && <PopUp message={error} type="alert" />}
+        {SuccessPopup && <PopUp message="Login Successfully, Please wait!" type="success" />}
+
         <div className={styles.field}>
           <label> Login </label>
           <input type="text" required={true} className={styles.input} value={login}
@@ -64,7 +81,7 @@ export default function Home() {
         </button>
       </form>
       <div className={styles.discover}>
-        <h1 className={styles.titre}>What is next ?</h1>
+        <h1 className={styles.titre}>Discover what is next ?</h1>
         <h1 className={styles.info}>
           <a
             href="https://dcs.leicester.gov.uk/media/1858/capture-the-flag.pdf"

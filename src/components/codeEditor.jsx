@@ -7,7 +7,7 @@ import { rust } from "@codemirror/lang-rust";
 import PopUp from "./PopUp";
 // import { dracula } from "@uiw/codemirror-theme-dracula"; // Dark Theme
 
-const CodeEditor = () => {
+const CodeEditor = ({problem , userId}) => {
   const [code, setCode] = useState(""); // Store the user's code
   const [language, setLanguage] = useState("python"); // Default language
 
@@ -34,12 +34,14 @@ const CodeEditor = () => {
     const language_id = language_ID();
     const encodedCode = new TextEncoder().encode(code);
     try {
-      const response = await fetch("http://localhost:5000/submit", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SUBMIT_LINK}`, {
         method: "POST",
         headers: { "Content-Type": "application/json ; charset=utf-8" },
         body: JSON.stringify({
           code: new TextDecoder().decode(encodedCode),
           language_id,
+          userId : userId, 
+          problemName : problem
         }),
       });
 
@@ -83,7 +85,7 @@ const CodeEditor = () => {
         marginTop: "30px",
       }}
     >
-      {showPopup && <PopUp message={"Code submitted successfully!"} />}
+      {showPopup && <PopUp message={"Code submitted successfully!"} type="success" />}
       <div
         style={{
           width: "56vw",

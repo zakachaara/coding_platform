@@ -3,8 +3,7 @@
     align-items: center;
     justify-content: flex-end;
     gap: 2rem;
-    margin:  0 1rem;
-
+    margin:  0.2rem 1rem;
 }
 .nav{
     display:inline-flex;
@@ -17,6 +16,9 @@
     font-weight: 400;
     font-size: 1.2rem;
     font-family: "JetBrains Mono", monospace;
+}
+.name{
+    background-color: #52ff42;
 }
 .container{
     /* padding: 2em; */

@@ -1,0 +1,14 @@
+.success{
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #4ade80;
+    top: 15%;
+    right: 2%;
+}
+.alert{
+    background-color: #fcdedc;
+    color: #f51e02;
+    border: 1px solid #de604a;
+    top: 15%;
+    left: 2%;
+}

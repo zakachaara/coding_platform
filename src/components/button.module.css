@@ -1,0 +1,71 @@
+.navbar{
+    display:flex ;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2rem;
+    margin:  0.2rem 1rem;
+}
+.nav{
+    display:inline-flex;
+    justify-content: center;
+    color: #2C3E50;
+    background-color: #FF8C42;
+    padding: 0px 20px ;
+    width: fit-content + 20px;
+    /* border-radius: .7rem; */
+    border-radius: 8px;
+
+    /* font-weight: 400; */
+    font-size: 1.2rem;
+    font-family: "JetBrains Mono", monospace;
+}
+.name{
+    background-color: #52ff42;
+    border: none;
+    border-radius: 8px;
+    
+}
+.disconnectButton {
+    background-color: #ff4d4f;
+    color: white;
+    padding: 8px 12px;
+    /* margin-left: 10px; */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .disconnectButton:hover {
+    background-color: #e60000;
+  }
+  .tooltipContainer {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tooltipText {
+    visibility: hidden;
+    width: fit-content;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 4px;
+  
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the button */
+    left: 40%;
+    transform: translateX(-50%);
+  
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+  }
+  
+  .tooltipContainer:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+  }
+  

@@ -15,7 +15,7 @@ export default function admin() {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8080/api/user/login", { // "user" to be changed by "admin"
+      const response = await fetch(`${process.env.PUBLIC_NEXT_BASE_URL}/api/users/login`, { // "user" to be changed by "admin"
         method: "POST",
         headers: {
           "Content-Type": "application/json",
