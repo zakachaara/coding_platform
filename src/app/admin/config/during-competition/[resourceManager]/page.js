@@ -13,20 +13,22 @@ export default function ResourceManagerPage() {
 
   // Fetch pending requests filtered by resourceName
   useEffect(() => {
+    let intervalId;
+  
     async function fetchRequests() {
       setLoading(true);
       setError(null);
       try {
-        
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/resources/pending-requests`, {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            }});
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/resources/pending-requests?resourceName=${encodeURIComponent(resourceName)}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
         if (!res.ok) throw new Error("Failed to fetch requests");
         const data = await res.json();
-        console.log("Appending Requests,", data)
+        // console.log("Appending Requests,", data);
         setRequests(data || []);
       } catch (err) {
         setError(err.message || "Error loading requests");
@@ -34,8 +36,16 @@ export default function ResourceManagerPage() {
         setLoading(false);
       }
     }
+  
+    // Fetch immediately on mount
     fetchRequests();
-  }, [resourceName]);
+  
+    // Set up polling every 3 seconds
+    intervalId = setInterval(fetchRequests, 3000);
+  
+    // Clean up interval on unmount
+    return () => clearInterval(intervalId);
+  }, [resourceName]); //resourceName
 
   // Handle approve/revoke actions
   async function handleAction(requestId, action) {

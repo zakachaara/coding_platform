@@ -64,7 +64,7 @@ export async function middleware(req) {
         } else {
           // Redirect to client-side polling page
           const pendingUrl = new URL(
-            `/access-pending?resourceId=${resource.resourceId}&redirect=${req.nextUrl.pathname}`,
+            `/access-pending?resourceId=${resourceId}&redirect=${req.nextUrl.pathname}`,
             req.url
           );
           return NextResponse.redirect(pendingUrl);
@@ -85,7 +85,7 @@ export async function middleware(req) {
         console.log("message after submitting,", requestRes);
         if (requestRes.ok) {
           const pendingUrl = new URL(
-            `/access-pending?resourceName=${rootPath}&redirect=${req.nextUrl.pathname}`,
+            `/access-pending?resourceId=${resourceId}&redirect=${req.nextUrl.pathname}`,
             req.url
           );
           return NextResponse.redirect(pendingUrl);

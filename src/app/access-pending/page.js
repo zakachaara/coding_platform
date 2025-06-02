@@ -12,9 +12,9 @@ export default function AccessPending() {
 
   const [status, setStatus] = useState('Requesting access...');
   const [isPolling, setIsPolling] = useState(true);
+  const token = localStorage.getItem('Authorization');
   useEffect(() => {
-    const token = localStorage.getItem('Authorization');
-
+    
     if (!token || !resourceId) {
       setStatus('Invalid request. Missing token or resource.');
       return;
@@ -25,18 +25,16 @@ export default function AccessPending() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/resources/my-access`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("status of req:", res.ok)
         const data = await res.json();
-        console.log(data)
+        // console.log(data)
         const resources = data.map((item) => ({
             resourceId: item.resourceId,
             resourceName: item.resourceName,
             accessGranted: item.accessGranted,
           }));
 
-        console.log("resources : " , resources)
         const match = resources.find(r => r.resourceId == resourceId);
-        console.log("matching :", match)
+        // console.log("matching :", match)
         if (match && match.accessGranted) {
           setStatus('Access granted! Redirecting...');
           clearInterval(pollInterval);
@@ -52,10 +50,10 @@ export default function AccessPending() {
         clearInterval(pollInterval);
         setIsPolling(false);
       }
-    }, 3000); // Poll every 5 seconds
+    }, 5000); // Poll every 5 seconds
 
     return () => clearInterval(pollInterval);
-  }, [resourceId, redirectTo, router]);
+  }, [resourceId, redirectTo, router]); // 
 
   return (
     <div className={styles.wrapper}>
@@ -63,7 +61,7 @@ export default function AccessPending() {
       <h1 className={styles.heading}>Access Pending</h1>
       
       <br></br>
-      {isPolling ? <p className={styles.message}>Polling for access... Don't switch Tabs </p> : <p className={styles.status}>{status}</p> }
+      {!isPolling ? <p className={styles.message}>Polling for access... Don't switch Tabs </p> : <p className={styles.status}>{status}</p> }
     </div>
     </div>
   );

@@ -89,6 +89,12 @@
     margin-bottom: 0.75rem;
     border-radius: 1rem;
 }
+.info:hover{
+  cursor: pointer;
+  background-color: #2359ee;
+  color: #f0f8ff;
+  transition: ease-in-out;
+}
 @media (prefers-color-scheme: dark) {
   .page {
     --gray-rgb: 255, 255, 255;

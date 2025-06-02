@@ -1,9 +1,12 @@
 import Image from "next/image";
 import styles from "./header.module.css";
+import { useSelector } from 'react-redux';
 import CountDownTimer from "./CountDownTimer";
 export default function CustomHeader (){
-    const duration = "04:00";
-    const startingdate = "06-01-2025 20:00";
+    const config = useSelector((state)=> state.config);
+    const {duration , startingDate} = config ;
+    // const duration = "04:00";
+    // const startingdate = "06-01-2025 20:00";
     return (
         <>
         <div className={styles.header}> 
@@ -19,7 +22,7 @@ export default function CustomHeader (){
           <h1 className={styles.competition}>Coding rooms</h1>
             </div>
             <span className={styles.timer}>
-                <CountDownTimer startingDate={startingdate} duration={duration} />
+                <CountDownTimer startingDate={startingDate} duration={duration} />
             </span>
         </div>
         </>
