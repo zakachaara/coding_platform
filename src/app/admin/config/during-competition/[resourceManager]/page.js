@@ -67,9 +67,9 @@ export default function ResourceManagerPage() {
     }
   }
   const req = [{id : 1 , username : "Testeur ", requestTime : "2025-11-12T12:00"},{id : 2 , username : "Javateur ", requestTime : "2025-11-12T12:00"}] 
-  if (loading) return <p>Loading requests for {resourceName}...</p>;
-  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
-  if (requests.length === 0) return <p>No pending requests for {resourceName}.</p>;
+  if (loading) return <p className={styles.message}>Loading requests for {resourceName}...</p>;
+  if (error) return <p className={styles.message} style={{ color: "red" }}>Error: {error}</p>;
+  if (requests.length === 0) return <p className={styles.message}>No pending requests for {resourceName}.</p>;
 
   return (
     <div style={{margin:"10dvh 10dvw" }}>

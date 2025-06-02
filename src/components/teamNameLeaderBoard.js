@@ -1,12 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSelector } from 'react-redux';
 import styles from "./button.module.css";
 import Button from "./Button"
-export default function teamNameLeaderBoard({teamName}){
+export default function teamNameLeaderBoard(){
+  // const teamName = useSelector((state) => state.team.name);
+//  Use this after you dispatch the data of team name 
   const [name, setName] = useState("");
   const router = useRouter();
   useEffect(() => {
+    // setName(teamName)
     // This runs only in the browser
     const storedName = localStorage.getItem("teamName");
     if (storedName) {

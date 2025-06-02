@@ -136,7 +136,7 @@ export default function Configuration() {
         </div>
         <div className={styles.form_group}>
           <label className={styles.label} htmlFor="problems">Problems/room</label>
-          <input className={styles.input_text} type="text" id="problems" defaultValue="3" />
+          <input className={styles.input_text} type="number" id="problems" defaultValue="3" />
         </div>
         <div className={styles.action_wrapper}>
           <button className={styles.btn}>save</button>

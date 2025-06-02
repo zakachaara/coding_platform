@@ -12,8 +12,8 @@ export default function AccessPending() {
 
   const [status, setStatus] = useState('Requesting access...');
   const [isPolling, setIsPolling] = useState(true);
-  const token = localStorage.getItem('Authorization');
   useEffect(() => {
+  const token = localStorage.getItem('Authorization');
     
     if (!token || !resourceId) {
       setStatus('Invalid request. Missing token or resource.');
