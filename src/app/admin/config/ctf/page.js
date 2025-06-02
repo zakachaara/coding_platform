@@ -1,18 +1,18 @@
 "use client";
 import React, { useState } from "react";
-import CPForm from "@/components/CPForm";
-import styles from "./cp.module.css";
+import CTFForm from "@/components/CTFForm";
+import styles from "../cp/cp.module.css";
 import Navigator from "@/components/Navigator";
-const CpSetup = () => {
+const CtfSetup = () => {
   const numberOfChallenges = 3; // or use from Redux/config
   const [activeChallengeIndex, setActiveChallengeIndex] = useState(0);
   const [infoVisible, setInfoVisible] = useState(true);
   const [challengeData, setChallengeData] = useState(
     Array.from({ length: numberOfChallenges }, () => ({
       pseudoName: "",
-      fullName: "",
+      description: "",
       initialScore: "",
-      zipFile: null,
+      flag: "",
     }))
   );
 
@@ -20,10 +20,6 @@ const CpSetup = () => {
     const updated = [...challengeData];
     updated[index][field] = value;
     setChallengeData(updated);
-  };
-
-  const handleFileChange = (index, file) => {
-    handleChange(index, "zipFile", file);
   };
 
   const handleSave = () => {
@@ -40,6 +36,7 @@ const CpSetup = () => {
     margin: "0 auto",
     fontFamily: "sans-serif",
   };
+
 
   const actionButton = {
     padding: "10px 16px",
@@ -106,11 +103,10 @@ const CpSetup = () => {
       </div>
 
       {/* Active Challenge Form */}
-      <CPForm
+      <CTFForm
         index={activeChallengeIndex}
         data={challengeData[activeChallengeIndex]}
         onChange={handleChange}
-        onFileChange={handleFileChange}
       />
 
       {/* Save/Get Buttons */}
@@ -132,4 +128,4 @@ const CpSetup = () => {
   );
 };
 
-export default CpSetup;
+export default CtfSetup;

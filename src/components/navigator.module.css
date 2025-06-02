@@ -41,4 +41,15 @@
     font-size: 1.4rem;
     font-weight: 700;
   }
+  .active .rectangle {
+    background-color: #2563eb;
+    color: white;
+  }
   
+  .active .triangle {
+    border-right-color: #2563eb;
+  } 
+  .active .triangle1 {
+    border-top-color: #2563eb;
+    border-bottom-color: #2563eb;
+  }

@@ -1,0 +1,14 @@
+.formBox{
+  border: 1px solid #D1D5DB;
+  padding: 20px;
+  border-radius: 4px;
+  font-family: "JetBrains Mono" , monospace;
+}
+.inputStyle{
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  border: 1px solid #D1D5DB;
+}
