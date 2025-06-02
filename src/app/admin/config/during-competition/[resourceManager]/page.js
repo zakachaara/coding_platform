@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import styles from "./manager.module.css";
 
 export default function ResourceManagerPage() {
   const params = useParams();
@@ -28,8 +29,9 @@ export default function ResourceManagerPage() {
         });
         if (!res.ok) throw new Error("Failed to fetch requests");
         const data = await res.json();
-        // console.log("Appending Requests,", data);
-        setRequests(data || []);
+        console.log("Appending Requests,", data);
+
+        setRequests(data || req);
       } catch (err) {
         setError(err.message || "Error loading requests");
       } finally {
@@ -64,23 +66,27 @@ export default function ResourceManagerPage() {
       alert(err.message);
     }
   }
-
+  const req = [{id : 1 , username : "Testeur ", requestTime : "2025-11-12T12:00"},{id : 2 , username : "Javateur ", requestTime : "2025-11-12T12:00"}] 
   if (loading) return <p>Loading requests for {resourceName}...</p>;
   if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
   if (requests.length === 0) return <p>No pending requests for {resourceName}.</p>;
 
   return (
-    <div>
-      <h1>Pending Requests for "{resourceName}"</h1>
+    <div style={{margin:"10dvh 10dvw" }}>
+      <h1 style={{textAlign:"center", marginBottom:"10px"}}>Pending Requests for "<b style={{color: "#00ced1de" , textTransform:"uppercase"}}>{resourceName}</b>"</h1>
       <ul>
         {requests.map((req) => (
-          <li key={req.id} style={{ marginBottom: "1rem", border: "1px solid #ccc", padding: "1rem" }}>
+          <li key={req.id} className={styles.list}>
+            <div>
             <p><strong>Team:</strong> {req.username || "Unknown"}</p>
             <p><strong>Request Time:</strong> {new Date(req.requestTime).toLocaleString()}</p>
-            <button onClick={() => handleAction(req.id, "approve")} style={{ marginRight: "1rem" }}>
+            </div>
+            <div >
+            <button onClick={() => handleAction(req.id, "approve")} className={styles.buttons} style={{ marginRight: "1rem" , backgroundColor:"#3fe94c" , boxShadow:"2px 2px 2px red"}}>
               Approve
             </button>
-            <button onClick={() => handleAction(req.id, "revoke")}>Revoke</button>
+            <button onClick={() => handleAction(req.id, "revoke")} className={styles.buttons} style={{backgroundColor:"red" , boxShadow:"2px 2px 2px #10ed10" }}>Revoke</button>
+            </div>
           </li>
         ))}
       </ul>
