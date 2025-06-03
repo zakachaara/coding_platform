@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './card.module.css';
 
-const Card = ({line1, line2 , solve, style , href}) => {
+const Card = ({line1, line2 ,line3, solve, style , href}) => {
   return (
     <div className={styles.container}>
       <div className={styles.card} style={style}>
@@ -21,6 +21,8 @@ const Card = ({line1, line2 , solve, style , href}) => {
             />
           </svg>
         </div>
+        <div className={styles.line3}>{line3}</div>
+        
         <a href={href}> <button className={styles.solveBtn} >{solve}</button></a>
       </div>
     </div>

@@ -73,3 +73,13 @@
     color: #1e293b;
   
 }
+.hide{
+  position: absolute;
+    top: 8px;
+    right: 12px;
+    background: transparent;
+    border-radius: 0.35rem;
+    padding: 5px;
+    cursor: pointer;
+    color: #1e293b;
+}

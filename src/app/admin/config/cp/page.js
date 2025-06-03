@@ -3,15 +3,24 @@ import React, { useState } from "react";
 import CPForm from "@/components/CPForm";
 import styles from "./cp.module.css";
 import Navigator from "@/components/Navigator";
+import PopUp from "@/components/PopUp";
+import ProblemsTable from "@/components/ProblemsTable";
+
 const CpSetup = () => {
-  const numberOfChallenges = 3; // or use from Redux/config
+  const numberOfChallenges = 3; // use from Redux/config
   const [activeChallengeIndex, setActiveChallengeIndex] = useState(0);
   const [infoVisible, setInfoVisible] = useState(true);
+  const [isSaving , setSaving] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [SuccessPopup, setSuccessPopup] = useState(false);
+  const [message , setMessage] = useState("");
   const [challengeData, setChallengeData] = useState(
     Array.from({ length: numberOfChallenges }, () => ({
       pseudoName: "",
       fullName: "",
       initialScore: "",
+      timeLimit:"",
+      memoryLimit:"",
       zipFile: null,
     }))
   );
@@ -26,12 +35,65 @@ const CpSetup = () => {
     handleChange(index, "zipFile", file);
   };
 
-  const handleSave = () => {
-    console.log("Saved:", challengeData);
+  const handleSubmit = async () => {
+    setSaving(true)
+    const formData = new FormData();
+  
+    // Append metadata as JSON (no need to include file field names now)
+    const metadata = challengeData.map(({ pseudoName, fullName, initialScore, timeLimit ,memoryLimit }) => ({
+      pseudoName,
+      fullName,
+      initialScore,
+      timeLimit,
+      memoryLimit,
+    }));
+    formData.append("metadata", JSON.stringify(metadata));
+  
+    // Use pseudoName as the key for each file
+    challengeData.forEach(({ pseudoName, zipFile }) => {
+      if (zipFile) {
+        formData.append(pseudoName, zipFile);
+      }
+    });
+  
+    try {
+      const res = await fetch("http://localhost:5005/api/problems/upload-all", {
+        method: "POST",
+        body: formData,
+      });
+  
+      const data = await res.json();
+      console.log("Success:", data);
+      setMessage(data.message)
+      setSuccessPopup(true);
+    // Hide after 3 seconds
+      setTimeout(() => setSuccessPopup(false), 5000);
+      setSaving(false);
+    } catch (err) {
+      setMessage(err)
+      setShowPopup(true);
+    // Hide after 3 seconds
+      setTimeout(() => setShowPopup(false), 5000);
+      console.error("Error uploading challenges:", err);
+      setSaving(false)
+    }
   };
+  
+  const [problems, setProblems] = useState([]);
+  const [showProblems, setShowProblems] = useState(false);
 
-  const handleGet = () => {
-    alert(JSON.stringify(challengeData, null, 2));
+  const handleGet = async () => {
+    
+      try {
+        const res = await fetch('http://localhost:5005/api/problems/room/1');
+        const data = await res.json();
+        setShowProblems(true)
+        setProblems(data);
+      } catch (error) {
+        console.error('Error fetching problems:', error);
+      }
+    
+
   };
 
   const containerStyle = {
@@ -49,10 +111,21 @@ const CpSetup = () => {
     color: "white",
     cursor: "pointer",
   };
-
+  
   return (
     <div style={containerStyle}>
       {/* Info Message */}
+      {showPopup && <PopUp message={message} type="alert" />}
+      {SuccessPopup && <PopUp message={message} type="success" />}
+      {showProblems && <div
+        className={styles.alertBox}
+      ><ProblemsTable problems={problems} name="CP"/> <button
+      className={styles.hide}
+      onClick={() => setShowProblems(false)}
+      title="Close"
+    >
+      Close
+    </button> </div> }
       {infoVisible && (
         <div
         className={styles.alertBox}
@@ -75,6 +148,8 @@ const CpSetup = () => {
           <li><strong>Pseudo-name</strong> (must match the zip file name)</li>
           <li><strong>Full name</strong></li>
           <li><strong>Initial score</strong></li>
+          <li><strong>Time Limit to not exceed (s)</strong></li>
+          <li><strong>Memory Limit to not exceed(MB)</strong></li>
           <li><strong>Zip file</strong></li>
         </ul>
       
@@ -110,16 +185,16 @@ const CpSetup = () => {
         index={activeChallengeIndex}
         data={challengeData[activeChallengeIndex]}
         onChange={handleChange}
-        onFileChange={handleFileChange}
+        handleFileChange={handleFileChange}
       />
 
       {/* Save/Get Buttons */}
       <div style={{ marginTop: "20px", textAlign: "right" }}>
         <button
           style={{ ...actionButton, backgroundColor: "#10B981" }}
-          onClick={handleSave}
+          onClick={handleSubmit}
         >
-          Save Changes
+          {isSaving ? <p> Saving ... </p> : <p>Save Changes</p>  }
         </button>
         <button
           style={{ ...actionButton, backgroundColor: "#4B5563" }}

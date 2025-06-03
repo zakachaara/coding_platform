@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from "./cpForm.module.css"
 
-const CPForm = ({ index, data, onChange, onFileChange }) => {
+const CPForm = ({ index, data, onChange, handleFileChange }) => {
   const labelStyle = {
     fontWeight: 'bold',
   };
@@ -38,7 +38,30 @@ const CPForm = ({ index, data, onChange, onFileChange }) => {
           required
         />
       </div>
-
+      <div style={{display:"flex" , justifyContent:"space-between"}}>
+        <div> 
+        <label style={labelStyle}>Time limit (s):</label>
+        <input
+          type="number"
+          className={styles.inputStyle}
+          value={data.timeLimit}
+          placeholder='1'
+          onChange={(e) => onChange(index, 'timeLimit', e.target.value)}
+          required
+        />
+        </div>
+        <div>
+        <label style={labelStyle}>Memory Limit (MB):</label>
+        <input
+          type="number"
+          className={styles.inputStyle}
+          value={data.memoryLimit}
+          placeholder='256'
+          onChange={(e) => onChange(index, 'memoryLimit', e.target.value)}
+          required
+        />
+        </div>
+      </div>
       <div>
         <label style={labelStyle}>Initial Score:</label>
         <input
@@ -57,9 +80,11 @@ const CPForm = ({ index, data, onChange, onFileChange }) => {
           type="file"
           accept=".zip"
           className={styles.inputStyle}
-          onChange={(e) => onFileChange(index, e.target.files[0])}
+          onChange={(e) => handleFileChange(index, e.target.files[0])}
           required
         />
+        {data.zipFile && <span>Selected: {data.zipFile.name}</span>}
+        
       </div>
     </div>
   );

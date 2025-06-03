@@ -1,10 +1,27 @@
+"use client"
 import styles from '../home/home.module.css'
 import Card from '../../components/card'
 import TeamNameLeaderBoard from '@/components/teamNameLeaderBoard'
 import Banner from '../../components/banner'
 import Navigator from '../../components/Navigator'
+import {useState , useEffect} from 'react';
 export default function cp() {
   const teamName = "test7357" // change this when you get the actual data
+  const [problems, setProblems] = useState([]);
+  useEffect(()=>{
+    async function fetchData() {
+      try {
+        const res = await fetch('http://localhost:5005/api/problems/room/1');
+        const data = await res.json();
+        setProblems(data);
+      }catch(err){
+        alert(err)
+      } 
+    } 
+    fetchData();
+
+  } , []);
+
   return (
     <>
       <div style={{
@@ -26,9 +43,11 @@ export default function cp() {
         <div className={styles.container}>
           <h1>Challenges</h1>
           <div className={styles.rooms}>
-            <Card line1={"Problem"} line2={"1"} solve={"</solve>"} style={{backgroundColor:"#33FF00"}} />
-            <Card line1={"Problem"} line2={"2"} solve={"</solve>"} style={{backgroundColor:"#33FF00"}} />
-            <Card line1={"Problem"} line2={"3"} solve={"</solve>"} style={{backgroundColor:"#33FF00"}}/>
+          {problems.map((problem, index) => (
+              <Card line1={problem.name} line2={`score: ${problem.initial_score}`} line3={problem.description} href={`cp/${problem.name}`} solve={"</solve>"} style={{backgroundColor:"#33FF00"}} />
+
+            ))}
+            
             
           </div>
         </div>
