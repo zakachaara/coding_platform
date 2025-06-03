@@ -42,23 +42,23 @@
 
 .alertBox{
   position: fixed;
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-family: JetBrains Mono , monospace;
   top: 20%;
   left: 50%;
   width: 60dvw;
-  height: 60dvh;
+  height: 62dvh;
   transform: translateX(-50%);
-    /* position: relative; */
-    padding: 20px;
-    border: 1px solid #2563eb;
-    background-color: #eef4ff;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    /* font-family: Arial; sans-serif; */
-    color: #1e293b;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    z-index: 1000;
+  /* position: relative; */
+  padding: 20px;
+  border: 1px solid #2563eb;
+  background-color: #eef4ff;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  /* font-family: Arial; sans-serif; */
+  color: #1e293b;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 1000;
   
 }
 .hideBtn {

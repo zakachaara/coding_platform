@@ -13,6 +13,7 @@ const CtfSetup = () => {
       description: "",
       initialScore: "",
       flag: "",
+      link:"",
     }))
   );
 
@@ -69,21 +70,22 @@ const CtfSetup = () => {
         </p>
       
         <ul style={{ paddingLeft: "20px", marginBottom: "16px" }}>
-          <li><strong>Pseudo-name</strong> (must match the zip file name)</li>
+          <li><strong>Pseudo-name</strong> </li>
           <li><strong>Full name</strong></li>
           <li><strong>Initial score</strong></li>
-          <li><strong>Zip file</strong></li>
+          <li><strong>The Flag</strong></li>
+          <li><strong>Link to the Live Application </strong>(May be edited as needed)</li>
         </ul>
       
-        <p style={{ marginBottom: "6px", fontWeight: "bold" }}>Expected Zip File Structure:</p>
+        <p style={{ marginBottom: "6px", fontWeight: "bold" }}>Example :</p>
         <pre style={{ background: "#f1f5f9", padding: "10px", borderRadius: "6px", overflowX: "auto" }}>
-      {`|__ README.md               // Problem statement
-      |__ Input/
-          |__ test1.txt           // 1st test case
-          |__ test2.txt           // 2nd test case
-      |__ Expected/
-          |__ expected_test1.txt  // Output for test1
-          |__ expected_test2.txt  // Output for test2`}
+      {`    |__ Pseudo-name : A               // Problem name
+    |__ Full name : Injection at a high level
+    |__ Initial score : 300          // will be dynamic - first to solve > high score
+    |__ The Flag : ASEDS{Th15_Fl46_15_4_t3ST}           
+    |__ Link :
+        |__ http://docker-container-application.demo:3030/  // the application running on a container on the serveur
+        |__ http://172.18.01.01:3030/  // IP Adress specific to the container`}
         </pre>
       </div>
       

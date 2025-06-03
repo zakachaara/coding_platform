@@ -62,6 +62,17 @@ const CTFForm = ({ index, data, onChange }) => {
           required
         />
       </div>
+      <div>
+        <label style={labelStyle}>Link to live app:</label>
+        <input
+          type="text"
+          className={styles.inputStyle}
+          value={data.link}
+          placeholder='e.g: http://172.18.01.01:3000/'
+          onChange={(e) => onChange(index, 'link', e.target.value)}
+          required
+        />
+      </div>
 
     </div>
   );

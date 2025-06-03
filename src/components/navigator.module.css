@@ -42,14 +42,14 @@
     font-weight: 700;
   }
   .active .rectangle {
-    background-color: #2563eb;
+    background-color: #00ced1de;
     color: white;
   }
   
   .active .triangle {
-    border-right-color: #2563eb;
+    border-right-color: #00ced1de;
   } 
   .active .triangle1 {
-    border-top-color: #2563eb;
-    border-bottom-color: #2563eb;
+    border-top-color: #00ced1de;
+    border-bottom-color: #00ced1de;
   }
