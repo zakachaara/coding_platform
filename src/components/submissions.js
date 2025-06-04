@@ -1,56 +1,32 @@
 "use client";
-import { useState, useEffect } from 'react';
-import styles from './submissions.module.css';
+import { useState, useEffect } from "react";
+import styles from "./submissions.module.css";
 
 // Mock API function - replace with your actual API call
-const fetchSubmissions = async () => {
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
-  // Mock data - replace with real data from your backend
-  return [
-    {
-      id: '123',
-      problemId: '456',
-      date: new Date('2023-05-15T10:30:00'),
-      memory: '45 MB',
-      time: '120 ms',
-      verdict: 'Accepted',
-      percentage: '100%'
-    },
-    {
-      id: '124',
-      problemId: '457',
-      date: new Date('2023-05-14T14:45:00'),
-      memory: '60 MB',
-      time: '250 ms',
-      verdict: 'Time Limit Exceeded',
-      percentage: '50%'
-    },
-    {
-      id: '125',
-      problemId: '456',
-      date: new Date('2023-05-16T09:15:00'),
-      memory: '40 MB',
-      time: '110 ms',
-      verdict: 'Accepted',
-      percentage: '100%'
+const fetchSubmissions = async (userId) => {
+  try {
+    const response = await fetch(`http://localhost:5005/user/${userId}/submissions`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch submissions");
     }
-  ];
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export default function Submissions({ newSubmissionAdded }) {
+export default function Submissions({ userId, newSubmissionAdded }) {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchData = async () => {
+  const fetchData = async (userId) => {
     try {
       setLoading(true);
-      const data = await fetchSubmissions();
-      // Sort by date in descending order (newest first)
-      const sortedData = data.sort((a, b) => b.date - a.date);
-      setSubmissions(sortedData);
+      const data = await fetchSubmissions(userId);
+      console.log(data)
+      setSubmissions(data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -59,26 +35,26 @@ export default function Submissions({ newSubmissionAdded }) {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(userId);
   }, []);
 
   // Refetch when a new submission is added
   useEffect(() => {
     if (newSubmissionAdded) {
-      fetchData();
+      fetchData(userId);
     }
   }, [newSubmissionAdded]);
 
   const getVerdictClass = (verdict) => {
-    if (verdict === 'Accepted') return styles.verdictAccepted;
-    if (verdict === 'Time Limit Exceeded') return styles.verdictPending;
+    if (verdict === "Accepted") return styles.verdictAccepted;
+    if (verdict === "Time Limit Exceeded") return styles.verdictPending;
     return styles.verdictRejected;
   };
 
   const getSymbol = (verdict) => {
-    if (verdict === 'Accepted') return '✓';
-    if (verdict === 'Time Limit Exceeded') return '⏱️';
-    return '✗';
+    if (verdict === "Accepted") return "✓";
+    if (verdict === "Time Limit Exceeded") return "⏱️";
+    return "✗";
   };
 
   if (loading && submissions.length === 0) {
@@ -90,12 +66,15 @@ export default function Submissions({ newSubmissionAdded }) {
   }
 
   return (
-    <div style={{fontFamily:"JetBrains Mono"}} className={styles.submissionsContainer}>
+    <div
+      style={{ fontFamily: "JetBrains Mono" }}
+      className={styles.submissionsContainer}
+    >
       <h1 className={styles.title}>Your Entire Submissions</h1>
-      <button onClick={fetchData} className={styles.refreshButton}>
+      <button onClick={()=> fetchData(userId)} className={styles.refreshButton}>
         Refresh Submissions
       </button>
-      
+
       <table className={styles.submissionsTable}>
         <thead>
           <tr>
@@ -110,22 +89,28 @@ export default function Submissions({ newSubmissionAdded }) {
           </tr>
         </thead>
         <tbody>
-          {submissions.map((submission) => (
-            <tr key={submission.id}>
-              <td>{submission.date.toLocaleString()}</td>
-              <td>{submission.id}</td>
-              <td>{submission.problemId}</td>
-              <td>{submission.memory}</td>
-              <td>{submission.time}</td>
-              <td className={getVerdictClass(submission.verdict)}>
-                {submission.verdict}
-              </td>
-              <td>{submission.percentage}</td>
-              <td className={styles.symbol}>
-                {getSymbol(submission.verdict)}
-              </td>
+          {submissions?.length > 0 ? (
+            submissions.map((submission) => (
+              <tr key={submission.id}>
+                <td>{new Date(submission.created_at).toLocaleString()}</td>
+                <td>{submission.id}</td>
+                <td>{submission.problem_id}</td>
+                <td>{submission.memory_usage} Kb</td>
+                <td>{parseInt(submission.execution_time)} ms</td>
+                <td className={getVerdictClass(submission.verdict)}>
+                  {submission.verdict}
+                </td>
+                <td>{submission.accept_percent}</td>
+                <td className={styles.symbol}>
+                  {getSymbol(submission.verdict)}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td >No submissions found.</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

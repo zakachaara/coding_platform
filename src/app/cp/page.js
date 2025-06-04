@@ -3,25 +3,28 @@ import styles from '../home/home.module.css'
 import Card from '../../components/card'
 import TeamNameLeaderBoard from '@/components/teamNameLeaderBoard'
 import Banner from '../../components/banner'
-import Navigator from '../../components/Navigator'
-import {useState , useEffect} from 'react';
+import {useState, useEffect } from 'react'
+
 export default function cp() {
   const teamName = "test7357" // change this when you get the actual data
+  
   const [problems, setProblems] = useState([]);
-  useEffect(()=>{
-    async function fetchData() {
+
+  useEffect(() => {
+    async function fetchdata(){
       try {
         const res = await fetch('http://localhost:5005/api/problems/room/1');
         const data = await res.json();
         setProblems(data);
-      }catch(err){
-        alert(err)
-      } 
-    } 
-    fetchData();
+      } catch (error) {
+        console.error('Error fetching problems:', error);
+      }
+    };
+    fetchdata()
 
-  } , []);
-
+  }, []);
+  
+  
   return (
     <>
       <div style={{

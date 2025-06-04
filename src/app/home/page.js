@@ -7,7 +7,7 @@ export default function Home() {
   const teamName = useSelector((state) => state.team.name);
   return (
     <>
-      <TeamNameLeaderBoard teamName={teamName} />
+\      <TeamNameLeaderBoard teamName={teamName} />
       <div style={{marginTop:"10px", display:"flex", alignItems:"center", justifyContent:"center"}}>
         <div className={styles.container}>
           <h1>Rooms</h1>

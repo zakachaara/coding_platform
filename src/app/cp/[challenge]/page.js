@@ -1,20 +1,36 @@
 "use client";
-import { useParams } from 'next/navigation';
-import styles from "../../home/home.module.css";
+import { useParams } from "next/navigation";
 import challengestyle from "./challenge.module.css";
 import Banner from "../../../components/banner";
-import Navigator from "../../../components/Navigator";
 import CodeEditor from "@/components/codeEditor";
 import MarkdownViewer from "@/components/MarkdownViewer";
-import TeamNameLeaderBoard from '@/components/teamNameLeaderBoard'
-import { useState } from "react";
-import Issue from "@/components/Issue";
+import TeamNameLeaderBoard from "@/components/teamNameLeaderBoard";
+import { useState, useEffect } from "react";
 import Submissions from "@/components/submissions";
 
 export default function challenge() {
-  const teamName = "test7357" // change this when you get the actual data
-  const { challenge } = useParams()
-  const userId = 1 // change this when you get the actual data
+  const teamName = "test7357"; // change this when you get the actual data
+  const { challenge } = useParams();
+  const userId = 1; // change this when you get the actual data
+
+  const [problems, setProblems] = useState([]);
+
+  useEffect(() => {
+    async function fetchdata() {
+  // setProblems([{id:1 , name:"A" , description : "The amgica" , timeLimit : 1 , memoryLimit : 256}])
+
+      try {
+        const res = await fetch("http://localhost:5005/api/problems/room/1");
+        const data = await res.json();
+        setProblems(data);
+      } catch (error) {
+        console.error("Error fetching problems:", error);
+      }
+    }
+    fetchdata();
+  }, []);
+  const problem_page = problems.find((problem) => problem.name == challenge);
+  // setTimeout(()=> console.log(problem_page), 5000)
   const [showDescription, setShowDescription] = useState(true);
   const [showSubmissions, setShowSubmissions] = useState(false);
   const [showIssues, setShowIssues] = useState(false);
@@ -47,7 +63,7 @@ export default function challenge() {
         {/* <Navigator text={'Pb 1'}/>
       <Navigator text={'Pb 2'}/>
       <Navigator text={'Pb 3'}/> */}
-      <div>My Problem name for debug: {challenge}</div>
+        <div>My Problem name for debug: {challenge}</div>
         <TeamNameLeaderBoard teamName={teamName} />
       </div>
       <div
@@ -59,16 +75,22 @@ export default function challenge() {
           height: "100vh",
         }}
       >
-        <div style={{ display: "block"}}> {/*, marginTop: "10px"*/ } 
+        <div style={{ display: "block" }}>
+          {" "}
+          {/*, marginTop: "10px"*/}
           <div className={challengestyle.tab_container}>
             <button
-              className={`${challengestyle.tab_button} ${showDescription ? challengestyle.active : ""}`}
+              className={`${challengestyle.tab_button} ${
+                showDescription ? challengestyle.active : ""
+              }`}
               onClick={() => affiche("desc")}
             >
               <span>✵</span> Description
             </button>
             <button
-              className={`${challengestyle.tab_button} ${showSubmissions ? challengestyle.active : ""}`}
+              className={`${challengestyle.tab_button} ${
+                showSubmissions ? challengestyle.active : ""
+              }`}
               onClick={() => affiche("subm")}
             >
               <span>✓</span> Submissions
@@ -81,13 +103,16 @@ export default function challenge() {
             </button> */}
           </div>
           <div className={challengestyle.tab_content}>
-            {showDescription && <MarkdownViewer problem={challenge}/>}
+            {showDescription && <MarkdownViewer problem={challenge} />}
             {/* {showIssues && <Issue/>} */}
-            {showSubmissions && <Submissions />}
+            {showSubmissions && <Submissions userId={userId} />}
           </div>
         </div>
-
-        <CodeEditor problem={challenge} userId={userId} /> 
+        {problem_page ? (
+          <CodeEditor problem={problem_page} userId={userId} />
+        ) : (
+          <div>Loading Code Editor...</div>
+        )}
       </div>
     </>
   );

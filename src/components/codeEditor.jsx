@@ -5,9 +5,13 @@ import { java } from "@codemirror/lang-java";
 import { cpp } from "@codemirror/lang-cpp";
 import { rust } from "@codemirror/lang-rust";
 import PopUp from "./PopUp";
+import {  useSelector } from 'react-redux';
+
 // import { dracula } from "@uiw/codemirror-theme-dracula"; // Dark Theme
 
 const CodeEditor = ({problem , userId}) => {
+  
+
   const [code, setCode] = useState(""); // Store the user's code
   const [language, setLanguage] = useState("python"); // Default language
 
@@ -41,7 +45,10 @@ const CodeEditor = ({problem , userId}) => {
           code: new TextDecoder().decode(encodedCode),
           language_id,
           userId : userId, 
-          problemName : problem
+          problemName : problem.name,
+          problemId:problem.id,
+          timeLimit:problem.time_limit,
+          memoryLimit:problem.memory_limit,
         }),
       });
 
@@ -113,7 +120,6 @@ const CodeEditor = ({problem , userId}) => {
           <option value="cpp">C++</option>
           <option value="rust">Rust</option>
         </select>
-
         {status && (
           <h1
             style={{
