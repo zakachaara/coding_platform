@@ -24,12 +24,56 @@ const CtfSetup = () => {
   };
 
   const handleSave = () => {
-    console.log("Saved:", challengeData);
+    console.log("Handling Save")
+    Promise.all(
+      challengeData.map((challenge) =>
+        fetch("http://localhost:5007/api/challenges/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: challenge.pseudoName,
+            description: challenge.description,
+            url: challenge.link,
+            flag: challenge.flag,
+            score: parseInt(challenge.initialScore, 10) || 0
+          })
+        })
+      )
+    )
+    .then((responses) => Promise.all(responses.map(res => res.json())))
+    .then((results) => {
+      console.log("Challenges created successfully:", results);
+      // Optionally show success message here
+    })
+    .catch((error) => {
+      console.error("Error creating challenges:", error);
+      // Optionally show error message here
+    });
   };
+  
 
-  const handleGet = () => {
-    alert(JSON.stringify(challengeData, null, 2));
-  };
+  const [challenges, setChallenges] = useState([]);
+
+const handleGet = () => {
+  fetch("http://localhost:5007/api/challenges/", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then((response) => response.json())
+  .then((result) => {
+    setChallenges(result);  // Store in state
+    console.log("Challenges retrieved successfully:", result);
+  })
+  .catch((error) => {
+    console.error("Error retrieving challenges:", error);
+  });
+};
+
+  
 
   const containerStyle = {
     padding: "20px",
