@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "./page.module.css";
 import PopUp from "../components/PopUp";
 import { useDispatch } from 'react-redux';
-import { setTeam } from '../store/slices/teamSlice';
+import { setId } from '../store/slices/teamSlice';
 import { NextResponse } from 'next/server';
 
 export default function Home() {
@@ -34,8 +34,13 @@ export default function Home() {
         // const errorData = await response.json();
         throw new Error("Login failed");
       }
-      dispatch(setTeam(login));
-      const {token} = await response.json();
+      const {token , id} = await response.json();
+      //  We are encoutering problems with the use of Store ( Redux)
+      dispatch(setId(id));
+      localStorage.setItem('user_id', id); 
+
+      console.log(id)
+
       localStorage.setItem('Authorization', token); 
       router.push('/home');
       localStorage.setItem("teamName", login);

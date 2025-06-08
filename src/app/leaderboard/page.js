@@ -1,12 +1,27 @@
+"use client"
+import { useState } from "react";
 import styleshome from "../home/home.module.css";
 import Banner from "../../components/banner";
 import Navigator from "../../components/Navigator";
 import Scoreboard from "../../components/Leader";
 import Button from "@/components/Button";
 import styles from "../leaderboard/leaderboard.module.css";
+import TeamNameLeaderBoard from "@/components/teamNameLeaderBoard";
 
 export default function LeaderBoard() {
-  const teamName = "test7357" // change this when you get the actual data
+  const [roomId, setRoomId] = useState(null);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+
+  const handleNavigatorClick = (room, id) => {
+    setRoomId(id);
+    setSelectedRoom(room);
+  };
+
+  const handleBannerClick = () => {
+    setRoomId(null);
+    setSelectedRoom(null);
+  };
+
   return (
     <>
       <div
@@ -18,18 +33,34 @@ export default function LeaderBoard() {
         }}
       >
         <div className={styles.leaderboards}>
-          <Banner text={"Leader board "} />
+          <div onClick={handleBannerClick} style={{ cursor: "pointer" }}>
+            <Banner text={"Leader board "} />
+          </div>
           <div className={styles.navigation}>
-            <Navigator text={"CTF"} />
-            <Navigator text={"CP "} />
-            <Navigator text={"CE "} />
+            <Navigator
+              text={"CTF"}
+              selected={selectedRoom === "CTF"}
+              onClick={() => handleNavigatorClick("CTF", 3)}
+            />
+            <Navigator
+              text={"CP"}
+              selected={selectedRoom === "CP"}
+              onClick={() => handleNavigatorClick("CP", 1)}
+            />
+            <Navigator
+              text={"CE"}
+              selected={selectedRoom === "CE"}
+              onClick={() => handleNavigatorClick("CE", 2)}
+            />
           </div>
         </div>
         <div className={`${styleshome.navbar} ${styles.team}`}>
-        <Button contenu={teamName} name={"name"}/>
+          <TeamNameLeaderBoard />
+
         </div>
       </div>
-      <Scoreboard score={"total_score"} />
+
+      <Scoreboard roomId={roomId} />
     </>
   );
 }

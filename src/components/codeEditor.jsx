@@ -46,6 +46,7 @@ const CodeEditor = ({problem , userId}) => {
           language_id,
           userId : userId, 
           problemName : problem.name,
+          initialScore : problem.initial_score,
           problemId:problem.id,
           timeLimit:problem.time_limit,
           memoryLimit:problem.memory_limit,

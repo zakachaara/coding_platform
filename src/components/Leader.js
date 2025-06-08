@@ -4,8 +4,9 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from 
 import styles from "./Leader.module.css"; // Note the capital L if your file is Leader.module.css
 
 const userColors = ["#FF5733", "#33FF57", "#337BFF", "#FF33A8", "#FFC300", "#353F57", "#3FEE4F", "#FEA3D8"];
+const medalColors = ["gold", "silver", "#cd7f32"];
 
-export default function Scoreboard({ score }) {
+export default function Scoreboard({ roomId }) {
   const [scores, setScores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [top3, setTop3] = useState([]);
@@ -13,9 +14,14 @@ export default function Scoreboard({ score }) {
   useEffect(() => {
     const fetchScores = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/scores");
-        const data = await response.json();
+        let fetching_url = "http://localhost:5005/api/leaderboard";
+        if(roomId) {
+          fetching_url = `http://localhost:5005/api/leaderboard?roomId=${encodeURIComponent(roomId)}`
+        }
+        const response = await fetch(fetching_url);
+        const {data} = await response.json();
         setScores(data);
+        console.log(fetching_url , data)
         const scores_copie = [...data];
         const sortedScores = scores_copie.sort((a, b) => b.total_score - a.total_score);
         
@@ -31,7 +37,7 @@ export default function Scoreboard({ score }) {
     fetchScores();
     const interval = setInterval(fetchScores, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [roomId]);
 
   return (
     <div style={{
@@ -53,8 +59,8 @@ export default function Scoreboard({ score }) {
               <YAxis dataKey="team" type="category" width={100} />
               <XAxis type="number" domain={[0, "dataMax + 10"]} />
               <Tooltip />
-              <Bar dataKey={score}>
-                {scores.map((entry, index) => (
+              <Bar dataKey="total_score">
+                {scores  && scores.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={userColors[index % userColors.length]} />
                 ))}
               </Bar>
@@ -64,11 +70,11 @@ export default function Scoreboard({ score }) {
       )}
       <div className={styles.discover}>
         <h1 className={styles.titre}>Podium</h1>
-        {top3.map((user) => (
+        {top3.map((user, index) => (
           <h1 
             key={user.user_id} 
             className={styles.info} 
-            style={{ backgroundColor: userColors[user.user_id-1] }}
+            style={{ backgroundColor: medalColors[index] }}
           >
             {user.team}
           </h1>

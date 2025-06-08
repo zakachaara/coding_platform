@@ -6,13 +6,16 @@ import CodeEditor from "@/components/codeEditor";
 import MarkdownViewer from "@/components/MarkdownViewer";
 import TeamNameLeaderBoard from "@/components/teamNameLeaderBoard";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Submissions from "@/components/submissions";
 
 export default function challenge() {
-  const teamName = "test7357"; // change this when you get the actual data
+  // const teamName = "test7357"; // change this when you get the actual data
   const { challenge } = useParams();
-  const userId = 1; // change this when you get the actual data
 
+  // const userId = useSelector((state) => state.team.id); // this stores the id of the team
+  const userId = localStorage.getItem("user_id"); // change this when you get the actual data
+  console.log(userId)
   const [problems, setProblems] = useState([]);
 
   useEffect(() => {
@@ -64,7 +67,7 @@ export default function challenge() {
       <Navigator text={'Pb 2'}/>
       <Navigator text={'Pb 3'}/> */}
         <div>My Problem name for debug: {challenge}</div>
-        <TeamNameLeaderBoard teamName={teamName} />
+        <TeamNameLeaderBoard />
       </div>
       <div
         style={{

@@ -15,10 +15,10 @@ export async function POST(req) {
     return NextResponse.json({ success: false, error: 'Invalid credentials' }, { status: 401 });
   }
 
-  const { token } = await authRes.json();
+  const { token , id } = await authRes.json();
 
 
-  const response = NextResponse.json({ success: true , token});
+  const response = NextResponse.json({ success: true , token , id});
 
   response.cookies.set('Authorization', token, {
     httpOnly: true,
