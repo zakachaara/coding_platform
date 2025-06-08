@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import CPForm from "@/components/CPForm";
-import styles from "./cp.module.css";
+import styles from "../cp/cp.module.css";
 import Navigator from "@/components/Navigator";
 import PopUp from "@/components/PopUp";
 import ProblemsTable from "@/components/ProblemsTable";
@@ -86,7 +86,7 @@ const CpSetup = () => {
 
   const handleGet = async () => {
     try {
-      const res = await fetch("http://localhost:5006/api/problems/room/2");
+      const res = await fetch("http://localhost:5005/api/problems/room/1");
       const data = await res.json();
       setShowProblems(true);
       setProblems(data);
@@ -178,7 +178,10 @@ const CpSetup = () => {
               overflowX: "auto",
             }}
           >
-            {`|__ README.md               // Problem statement
+    {`|__ README.md               // Problem statement
+|__ BaseCode               // Problem initial code(one file per language => total: 4)
+    |__ java.txt           // initial code for java
+    |__ python.txt           // same structure for ( rust and C++)
 |__ Input/
     |__ test1.txt           // 1st test case
     |__ test2.txt           // 2nd test case
