@@ -45,9 +45,8 @@
 import React, { useEffect, useState } from "react";
 import {marked} from "marked";
 
-const MarkdownViewer = ({problem}) => {
+const MarkdownViewer = ({problem , link}) => {
   const [markdown, setMarkdown] = useState("");
-  const link = `${process.env.NEXT_PUBLIC_PROBLEM_GETTER_LINK}/readme`
   // console.log(link)
   const Headers = {
     'Content-Type': 'text/html',

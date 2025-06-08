@@ -6,7 +6,6 @@ import Banner from '../../components/banner'
 import {useState, useEffect } from 'react'
 
 export default function cp() {
-  const teamName = "test7357" // change this when you get the actual data
   
   const [problems, setProblems] = useState([]);
 
@@ -34,7 +33,7 @@ export default function cp() {
           justifyContent: "space-between",
         }}>
       <Banner text={'</CP Room>'} style={{backgroundColor:'#33FF00'}}/>
-      <TeamNameLeaderBoard teamName={teamName} />
+      <TeamNameLeaderBoard />
       </div>
       <div
         style={{

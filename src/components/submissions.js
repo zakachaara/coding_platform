@@ -3,9 +3,14 @@ import { useState, useEffect } from "react";
 import styles from "./submissions.module.css";
 
 // Mock API function - replace with your actual API call
-const fetchSubmissions = async (userId) => {
+const fetchSubmissions = async (userId, isCE) => {
   try {
-    const response = await fetch(`http://localhost:5005/user/${userId}/submissions`);
+    let fetching_URL = `http://localhost:5005/user/${userId}/submissions`
+    if (isCE) {
+      fetching_URL = `http://localhost:5006/user/${userId}/submissions`
+    }
+    const response = await fetch(fetching_URL); 
+
     if (!response.ok) {
       throw new Error("Failed to fetch submissions");
     }
@@ -16,15 +21,15 @@ const fetchSubmissions = async (userId) => {
   }
 };
 
-export default function Submissions({ userId, newSubmissionAdded }) {
+export default function Submissions({ userId, newSubmissionAdded , isCE }) {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchData = async (userId) => {
+  const fetchData = async (userId, isCE) => {
     try {
       setLoading(true);
-      const data = await fetchSubmissions(userId);
+      const data = await fetchSubmissions(userId , isCE);
       console.log(data)
       setSubmissions(data);
     } catch (err) {
@@ -35,7 +40,7 @@ export default function Submissions({ userId, newSubmissionAdded }) {
   };
 
   useEffect(() => {
-    fetchData(userId);
+    fetchData(userId ,isCE);
   }, []);
 
   // Refetch when a new submission is added

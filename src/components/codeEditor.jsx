@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
 import { java } from "@codemirror/lang-java";
@@ -9,9 +9,7 @@ import {  useSelector } from 'react-redux';
 
 // import { dracula } from "@uiw/codemirror-theme-dracula"; // Dark Theme
 
-const CodeEditor = ({problem , userId}) => {
-  
-
+const CodeEditor = ({problem , userId , isCE , SUBMIT_URL}) => {
   const [code, setCode] = useState(""); // Store the user's code
   const [language, setLanguage] = useState("python"); // Default language
 
@@ -30,6 +28,26 @@ const CodeEditor = ({problem , userId}) => {
     if (language === "cpp") return 73;
   };
   const [showPopup, setShowPopup] = useState(false);
+  
+// Get the initial code for the problem if it is a CE problem 
+const Headers = {
+  'Content-Type': 'text/html',
+  'x-problem-name': `${problem.name}`
+};
+
+useEffect(() => {
+  if (!isCE) return;
+
+  const link = `${process.env.NEXT_PUBLIC_PROBLEM_GETTER_CE_LINK}/initialCode?language=${encodeURIComponent(language)}`
+  fetch(link , {method : 'GET' , headers: Headers
+  })
+    .then((res) => res.text())
+    .then((text) => setCode(text))
+    .catch((err) => {
+      console.error("Error loading markdown:", err);
+      setMarkdown("<p>Error loading content</p>");
+    });
+  } , [isCE , language])
 
   const handleSubmission = async () => {
     setShowPopup(true);
@@ -38,7 +56,7 @@ const CodeEditor = ({problem , userId}) => {
     const language_id = language_ID();
     const encodedCode = new TextEncoder().encode(code);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SUBMIT_LINK}`, {
+      const response = await fetch(`${SUBMIT_URL}`, {
         method: "POST",
         headers: { "Content-Type": "application/json ; charset=utf-8" },
         body: JSON.stringify({
@@ -61,25 +79,6 @@ const CodeEditor = ({problem , userId}) => {
   };
 
   const [submissionResults, setSubmissionResults] = useState([]);
-
-  // const calculateResults = () => {
-  //   if (!submissionResults.length) return { status: null , percentage: 0 };
-
-  //   const acceptedTests = submissionResults.filter((res) => res.status === "Accepted").length;
-  //   const totalTests = submissionResults.length;
-
-  //   // Find first non-Accepted status
-  //   const firstFailedTest = submissionResults.find((res) => res.status !== "Accepted");
-  //   // Resource usage :
-  //   const maxTime = Math.max(...submissionResults.map(res => res.time));
-  //   const maxMemory = Math.max(...submissionResults.map(res => res.memory));
-  //   return {
-  //     status: firstFailedTest ? firstFailedTest.status : "Accepted",
-  //     percentage: ((acceptedTests / totalTests) * 100).toFixed(2),
-  //     time : maxTime ,
-  //     memory : maxMemory,
-  //   };
-  // };
 
   const { status, percentage, time, memory } = submissionResults;
 

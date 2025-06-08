@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
-import challengestyle from "./challenge.module.css";
-import Banner from "../../../components/banner";
+import challengestyle from "../../cp/[challenge]/challenge.module.css";
+import Banner from "@/components/banner";
 import CodeEditor from "@/components/codeEditor";
 import MarkdownViewer from "@/components/MarkdownViewer";
 import TeamNameLeaderBoard from "@/components/teamNameLeaderBoard";
@@ -23,9 +23,10 @@ export default function challenge() {
   // setProblems([{id:1 , name:"A" , description : "The amgica" , timeLimit : 1 , memoryLimit : 256}])
 
       try {
-        const res = await fetch("http://localhost:5005/api/problems/room/1");
+        const res = await fetch("http://localhost:5006/api/problems/room/2");
         const data = await res.json();
         setProblems(data);
+        // console.log(data)
       } catch (error) {
         console.error("Error fetching problems:", error);
       }
@@ -63,9 +64,6 @@ export default function challenge() {
         }}
       >
         <Banner style={{ backgroundColor: "#33FF00" }} text={"</CP Room> "} />
-        {/* <Navigator text={'Pb 1'}/>
-      <Navigator text={'Pb 2'}/>
-      <Navigator text={'Pb 3'}/> */}
         <div>My Problem name for debug: {challenge}</div>
         <TeamNameLeaderBoard />
       </div>
@@ -106,13 +104,13 @@ export default function challenge() {
             </button> */}
           </div>
           <div className={challengestyle.tab_content}>
-            {showDescription && <MarkdownViewer problem={challenge} link={`${process.env.NEXT_PUBLIC_PROBLEM_GETTER_CP_LINK}/readme`} />}
+  {showDescription && <MarkdownViewer problem={challenge} link={`${process.env.NEXT_PUBLIC_PROBLEM_GETTER_CE_LINK}/readme`}/>}
             {/* {showIssues && <Issue/>} */}
-            {showSubmissions && <Submissions userId={userId} />}
+            {showSubmissions && <Submissions userId={userId} isCE={true}/>}
           </div>
         </div>
         {problem_page ? (
-          <CodeEditor problem={problem_page} userId={userId} SUBMIT_URL={process.env.NEXT_PUBLIC_SUBMIT_CE_LINK} />
+          <CodeEditor problem={problem_page} userId={userId} isCE={true} SUBMIT_URL={process.env.NEXT_PUBLIC_SUBMIT_CE_LINK} />
         ) : (
           <div>Loading Code Editor...</div>
         )}
