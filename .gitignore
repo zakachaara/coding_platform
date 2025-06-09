@@ -1,41 +1,67 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Node.js
+node_modules/
+**/node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Logs
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# Environment variables
+.env
+.env.*  # For .env.local, .env.production, etc.
+**/.env
+**/.env.*
 
-# vercel
-.vercel
+# Build output
+dist/
+build/
+out/
+.next/
+**/dist/
+**/build/
+**/out/
+**/.next/
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# OS generated
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+**/.vscode/
+**/.idea/
+
+# Coverage reports
+coverage/
+**/coverage/
+
+# Optional npm cache
+.npm
+.pnpm-store
+
+# Debug
+*.swp
+*.swo
+
+# Mac system files
+.AppleDouble
+.LSOverride
+
+
+# Misc
+*.tgz
+*.tar.gz
+*.lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+**/package-lock.json
+**/yarn.lock
+**/pnpm-lock.yaml
