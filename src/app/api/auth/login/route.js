@@ -5,7 +5,7 @@ export async function POST(req) {
   const { login, password } = await req.json();
 
   // Forward the login to your actual auth service
-  const authRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
+  const authRes = await fetch(`${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ login, password }),

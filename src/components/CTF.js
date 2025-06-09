@@ -10,7 +10,7 @@ export default function ChallengeCard({ challenge, userId }) {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:5007/api/submissions", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SUBMIT_CTF_LINK}/api/submissions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

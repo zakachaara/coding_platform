@@ -39,7 +39,7 @@ export async function middleware(req) {
 
   if (token) {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/resources/my-access`,
+      `${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/resources/my-access`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -74,7 +74,7 @@ export async function middleware(req) {
       } else {
         // No access record — request access
         const requestRes = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/resources/request`,
+          `${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/resources/request`,
           {
             method: "POST",
             headers: {

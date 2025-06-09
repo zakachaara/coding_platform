@@ -12,7 +12,7 @@ export default function ctf() {
    const [challenges, setChallenges] = useState([]);
 
 useEffect( () => {
-  fetch("http://localhost:5007/api/challenges/", {
+  fetch(`${process.env.NEXT_PUBLIC_SUBMIT_CTF_LINK}/api/challenges/`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"

@@ -14,9 +14,9 @@ export default function Scoreboard({ roomId }) {
   useEffect(() => {
     const fetchScores = async () => {
       try {
-        let fetching_url = "http://localhost:5005/api/leaderboard";
+        let fetching_url = `${process.env.NEXT_PUBLIC_CP_SERVICE}/api/leaderboard`;
         if(roomId) {
-          fetching_url = `http://localhost:5005/api/leaderboard?roomId=${encodeURIComponent(roomId)}`
+          fetching_url = `${process.env.NEXT_PUBLIC_CP_SERVICE}/api/leaderboard?roomId=${encodeURIComponent(roomId)}`
         }
         const response = await fetch(fetching_url);
         const {data} = await response.json();

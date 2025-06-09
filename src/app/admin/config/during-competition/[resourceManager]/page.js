@@ -20,7 +20,7 @@ export default function ResourceManagerPage() {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/resources/pending-requests?resourceName=${encodeURIComponent(resourceName)}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/resources/pending-requests?resourceName=${encodeURIComponent(resourceName)}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ export default function ResourceManagerPage() {
   // Handle approve/revoke actions
   async function handleAction(requestId, action) {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/resources/${requestId}/${action}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/resources/${requestId}/${action}`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`,

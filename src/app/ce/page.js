@@ -12,7 +12,7 @@ export default function ce() {
   useEffect(() => {
     async function fetchdata(){
       try {
-        const res = await fetch('http://localhost:5006/api/problems/room/2');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_CE_SERVICE}/api/problems/room/2`);
         const data = await res.json();
         setProblems(data);
       } catch (error) {

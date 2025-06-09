@@ -22,7 +22,7 @@ export default function Configuration() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/users/upload`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/auth/users/upload`, {
         method: "POST",
         body: formData,
       });
@@ -55,7 +55,7 @@ export default function Configuration() {
     };
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/configuration`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/configuration`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +85,7 @@ export default function Configuration() {
     const payload = { login };
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/users`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/auth/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,7 +110,7 @@ export default function Configuration() {
 
   const getListOfUsers = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/users`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/auth/users`);
       const data = await response.json();
       setTeams(data);
       setShowTable(true);

@@ -5,9 +5,9 @@ import styles from "./submissions.module.css";
 // Mock API function - replace with your actual API call
 const fetchSubmissions = async (userId, isCE) => {
   try {
-    let fetching_URL = `http://localhost:5005/user/${userId}/submissions`
+    let fetching_URL = `${process.env.NEXT_PUBLIC_CP_SERVICE}/user/${userId}/submissions`
     if (isCE) {
-      fetching_URL = `http://localhost:5006/user/${userId}/submissions`
+      fetching_URL = `${process.env.NEXT_PUBLIC_CE_SERVICE}/user/${userId}/submissions`
     }
     const response = await fetch(fetching_URL); 
 

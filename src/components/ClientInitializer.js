@@ -8,7 +8,7 @@ export default function ClientInitializer() {
   useEffect(() => {
     console.log("✅ ClientInitializer running in the browser"); // debug
     const fetchConfig = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/configuration`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/configuration`);
       const data = await res.json();
       console.log(data)
       dispatch(setConfig(data));

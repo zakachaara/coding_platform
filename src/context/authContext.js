@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
 
   const fetchUserAccess = async (token) => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/resources/my-access`,
+      `${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/resources/my-access`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }

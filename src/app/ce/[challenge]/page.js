@@ -23,7 +23,7 @@ export default function challenge() {
   // setProblems([{id:1 , name:"A" , description : "The amgica" , timeLimit : 1 , memoryLimit : 256}])
 
       try {
-        const res = await fetch("http://localhost:5006/api/problems/room/2");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_CE_SERVICE}/api/problems/room/2`);
         const data = await res.json();
         setProblems(data);
         // console.log(data)
@@ -104,13 +104,13 @@ export default function challenge() {
             </button> */}
           </div>
           <div className={challengestyle.tab_content}>
-  {showDescription && <MarkdownViewer problem={challenge} link={`${process.env.NEXT_PUBLIC_PROBLEM_GETTER_CE_LINK}/readme`}/>}
+  {showDescription && <MarkdownViewer problem={challenge} link={`${process.env.NEXT_PUBLIC_CE_SERVICE}/api/problems/readme`}/>}
             {/* {showIssues && <Issue/>} */}
             {showSubmissions && <Submissions userId={userId} isCE={true}/>}
           </div>
         </div>
         {problem_page ? (
-          <CodeEditor problem={problem_page} userId={userId} isCE={true} SUBMIT_URL={process.env.NEXT_PUBLIC_SUBMIT_CE_LINK} />
+          <CodeEditor problem={problem_page} userId={userId} isCE={true} SUBMIT_URL={`${process.env.NEXT_PUBLIC_CE_SERVICE}/submit`} />
         ) : (
           <div>Loading Code Editor...</div>
         )}

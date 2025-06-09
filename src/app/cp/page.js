@@ -12,7 +12,7 @@ export default function cp() {
   useEffect(() => {
     async function fetchdata(){
       try {
-        const res = await fetch('http://localhost:5005/api/problems/room/1');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_CP_SERVICE}/api/problems/room/1`);
         const data = await res.json();
         setProblems(data);
       } catch (error) {

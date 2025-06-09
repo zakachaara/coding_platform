@@ -27,7 +27,7 @@ const CtfSetup = () => {
     console.log("Handling Save")
     Promise.all(
       challengeData.map((challenge) =>
-        fetch("http://localhost:5007/api/challenges/", {
+        fetch(`${process.env.NEXT_PUBLIC_SUBMIT_CTF_LINK}/api/challenges/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -57,7 +57,7 @@ const CtfSetup = () => {
   const [challenges, setChallenges] = useState([]);
 
 const handleGet = () => {
-  fetch("http://localhost:5007/api/challenges/", {
+  fetch(`${process.env.NEXT_PUBLIC_SUBMIT_CTF_LINK}/api/challenges/`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"

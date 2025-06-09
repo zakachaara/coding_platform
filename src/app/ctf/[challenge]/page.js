@@ -22,7 +22,7 @@ export default function ChallengePage() {
   const userId = typeof window !== "undefined" ? localStorage.getItem("user_id") : null;
 
   useEffect(() => {
-    fetch("http://localhost:5007/api/challenges/")
+    fetch(`${process.env.NEXT_PUBLIC_SUBMIT_CTF_LINK}/api/challenges/`)
       .then((response) => response.json())
       .then((result) => {
         const problem_page = result.data.find((problem) => problem.name === challenge);
@@ -39,7 +39,7 @@ export default function ChallengePage() {
     if (!problem?.id) return;
     try {
       setLoading(true);
-      const res = await fetch(`http://localhost:5007/api/submissions/challenge/${problem.id}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SUBMIT_CTF_LINK}/api/submissions/challenge/${problem.id}`);
       if (!res.ok) throw new Error("Failed to fetch submissions");
       const data = await res.json();
       setSubmissions(data.data || []);

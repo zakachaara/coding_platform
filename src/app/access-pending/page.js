@@ -22,7 +22,7 @@ export default function AccessPending() {
 
     const pollInterval = setInterval(async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/resources/my-access`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_AUTHENTICATION_URL}/api/resources/my-access`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
