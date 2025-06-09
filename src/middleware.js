@@ -18,6 +18,8 @@ export async function middleware(req) {
   }
   if (rootPath === "home") {
     const admintoken = req.cookies.get("Admin-Authorization")?.value;
+    const token = req.cookies.get("Authorization")?.value;
+
     if (admintoken || token) return NextResponse.next();
     return NextResponse.redirect(new URL("/", req.url));
   }

@@ -14,16 +14,21 @@ export default function teamNameLeaderBoard(){
     const storedName = localStorage.getItem("teamName");
     if (storedName) {
       setName(storedName);
-    } else {
-      localStorage.setItem("teamName", "just7357");
-      setName("just7357");
-    }
+    } 
   }, []);
-  const handleDisconnect = () => {
-    // Remove from localStorage
-    localStorage.removeItem("teamName");
 
-    // Clear all cookies (or just specific ones)
+
+const handleDisconnect = async () => {
+  try {
+    // Call the logout API to clear server-side cookie
+    await fetch("/api/auth/logout", {
+      method: "POST",
+    });
+
+    // Clear localStorage
+    localStorage.clear();
+
+    // Clear accessible cookies (only non-HttpOnly cookies)
     document.cookie
       .split(";")
       .forEach((cookie) => {
@@ -31,9 +36,13 @@ export default function teamNameLeaderBoard(){
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
       });
 
-    // Redirect to home page
+    // Redirect to home/login
     router.push("/");
-  };
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+};
+
     return (
         <div className={styles.navbar}>
         <a href="/leaderboard"><Button contenu={"Leader Board"}/></a>
