@@ -23,7 +23,9 @@ export default function ChallengeCard({ challenge, userId }) {
       });
 
       const result = await response.json();
-      setVerdict(result.data?.verdict || "Unknown response");
+      console.log(result)
+      setVerdict(result.verdict || "Unknown response");
+      setTimeout(()=>{setVerdict(null)} , 5000)
     } catch (err) {
       console.error("Submission error:", err);
       setVerdict("Error submitting flag");
@@ -35,7 +37,7 @@ export default function ChallengeCard({ challenge, userId }) {
       {verdict && (
         <PopUp
           message={verdict}
-          type={verdict === "Accepted" ? "success" : "alert"}
+          type={verdict == "accepted" ? "success" : "alert"}
         />
       )}
 
@@ -53,6 +55,9 @@ export default function ChallengeCard({ challenge, userId }) {
       </div>
 
       <div className={styles.flagInput}>
+      <button className={styles.submit} onClick={handleSubmit}>
+          <Banner text={'{submit}'} style1={{ borderTop: "20px solid transparent", borderBottom: "20px solid transparent", borderRight: "40px solid #fff9c4", zIndex: "2" }} />
+        </button>
         <input
           type="text"
           placeholder="your flag goes here"
@@ -60,9 +65,7 @@ export default function ChallengeCard({ challenge, userId }) {
           value={flag}
           onChange={(e) => setFlag(e.target.value)}
         />
-        <button className={styles.submit} onClick={handleSubmit}>
-          <Banner text={'{submit}'} style1={{ borderTop: "20px solid transparent", borderBottom: "20px solid transparent", borderRight: "40px solid #fff9c4", zIndex: "2" }} />
-        </button>
+        
       </div>
     </div>
   );
