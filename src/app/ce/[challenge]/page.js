@@ -63,9 +63,8 @@ export default function challenge() {
           justifyContent: "space-between",
         }}
       >
-        <Banner style={{ backgroundColor: "#33FF00" }} text={"</CP Room> "} />
-        <div>My Problem name for debug: {challenge}</div>
-        <TeamNameLeaderBoard />
+      <Banner text={'# CE Room'} style={{backgroundColor:'#0900FF' , color:"#ffffff"} }/>
+      <TeamNameLeaderBoard />
       </div>
       <div
         style={{

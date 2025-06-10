@@ -1,14 +1,13 @@
 // controllers/scoreController.js
 const db = require('../models/db');
 
-function computeScore(S0, k, n, lambda) {
-  return S0 * Math.exp(-k * (n - 1)*0.1) * Math.exp(-lambda * n);
+function computeScore(S0,  n, lambda) {
+  return S0 * Math.exp(-lambda * (n - 1));
 }
 
 async function updateScore(userId, problemId , initialScore) {
   const S0 = initialScore;
-  const lambda = 0.01; // decay rate global
-  const k = 0.3 ; // decay rate per attempt
+  const lambda = process.env.LAMBDA || 0.01; // decay rate global
   try {
     // Check if the user already solved the problem
     const { rows: acceptedRows } = await db.query(
@@ -28,10 +27,10 @@ async function updateScore(userId, problemId , initialScore) {
       [userId, problemId]
     );
     const n = parseInt(attemptRows[0].count); 
-    console.log("k", n)
+    console.log("n", n)
     // Count unique users who attempted the problem
     
-    const score = computeScore(S0, k, n, lambda);
+    const score = computeScore(S0,  n, lambda);
   
     // Upsert into user_problem_score
     await db.query(

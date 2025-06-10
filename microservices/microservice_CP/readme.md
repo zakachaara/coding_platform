@@ -9,6 +9,9 @@ DB_NAME=  usermanagement #test_db
 JUDGE0_URL=http://10.0.0.30:2358/
 ### JUDGE0_API_KEY=your_rapidapi_key_if_needed  # Leave blank if not using RapidAPI
 
+
+### Scoring Varibale
+LAMBDA=0.23 #decay factor
 ### Express Server Port
 PORT=5005
 

@@ -10,6 +10,8 @@ DB_PASSWORD=postgres
 PORT=5007
 NODE_ENV=development
 
+### Scoring Varibale
+LAMBDA=0.23 #decay factor
 
-###fro encryption
+### fro encryption
 ENCRYPTION_KEY=12345678901234567890123456789012

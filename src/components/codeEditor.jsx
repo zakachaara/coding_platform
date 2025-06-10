@@ -38,7 +38,7 @@ const Headers = {
 useEffect(() => {
   if (!isCE) return;
 
-  const link = `${process.env.NEXT_PUBLIC_PROBLEM_GETTER_CE_LINK}/initialCode?language=${encodeURIComponent(language)}`
+  const link = `${process.env.NEXT_PUBLIC_CE_SERVICE}/api/problems/initialCode?language=${encodeURIComponent(language)}`
   fetch(link , {method : 'GET' , headers: Headers
   })
     .then((res) => res.text())

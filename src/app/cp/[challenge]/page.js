@@ -66,7 +66,6 @@ export default function challenge() {
         {/* <Navigator text={'Pb 1'}/>
       <Navigator text={'Pb 2'}/>
       <Navigator text={'Pb 3'}/> */}
-        <div>My Problem name for debug: {challenge}</div>
         <TeamNameLeaderBoard />
       </div>
       <div

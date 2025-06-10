@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import CTFForm from "@/components/CTFForm";
 import styles from "../cp/cp.module.css";
 import Navigator from "@/components/Navigator";
+import ChallengesTable from "@/components/ChallengesTable";
 const CtfSetup = () => {
   const numberOfChallenges = 3; // or use from Redux/config
   const [activeChallengeIndex, setActiveChallengeIndex] = useState(0);
@@ -55,6 +56,7 @@ const CtfSetup = () => {
   
 
   const [challenges, setChallenges] = useState([]);
+  const [showProblems, setShowProblems] = useState(false);
 
 const handleGet = () => {
   fetch(`${process.env.NEXT_PUBLIC_SUBMIT_CTF_LINK}/api/challenges/`, {
@@ -65,8 +67,9 @@ const handleGet = () => {
   })
   .then((response) => response.json())
   .then((result) => {
-    setChallenges(result);  // Store in state
-    console.log("Challenges retrieved successfully:", result);
+    setChallenges(result.data);
+    setShowProblems(true)  // Store in state
+    console.log("Challenges retrieved successfully:", result.data);
   })
   .catch((error) => {
     console.error("Error retrieving challenges:", error);
@@ -95,6 +98,18 @@ const handleGet = () => {
   return (
     <div style={containerStyle}>
       {/* Info Message */}
+      {showProblems && (
+        <div className={styles.alertBox}>
+          <ChallengesTable challenges={challenges} name="CTF" />{" "}
+          <button
+            className={styles.hide}
+            onClick={() => setShowProblems(false)}
+            title="Close"
+          >
+            Close
+          </button>{" "}
+        </div>
+      )}
       {infoVisible && (
         <div
         className={styles.alertBox}
