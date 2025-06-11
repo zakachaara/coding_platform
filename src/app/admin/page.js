@@ -19,7 +19,7 @@ export default function admin() {
     setError("");
 
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/admin/login`, { // "user" to be changed by "admin"
+      const response = await fetch(`/api/auth/admin/login`, { // "user" to be changed by "admin"
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export default function admin() {
       setTimeout(() => setSuccessPopup(false), 5000);
 
       router.push("/admin/config"); // Redirect on success
-
+      console.log("You should be redirected !")
     } catch (err) {
       setShowPopup(true);
     // Hide after 3 seconds

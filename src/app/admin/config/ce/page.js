@@ -6,7 +6,7 @@ import Navigator from "@/components/Navigator";
 import PopUp from "@/components/PopUp";
 import ProblemsTable from "@/components/ProblemsTable";
 
-const CpSetup = () => {
+const CeSetup = () => {
   const numberOfChallenges = 3; // use from Redux/config
   const [activeChallengeIndex, setActiveChallengeIndex] = useState(0);
   const [infoVisible, setInfoVisible] = useState(true);
@@ -232,4 +232,4 @@ const CpSetup = () => {
   );
 };
 
-export default CpSetup;
+export default CeSetup;

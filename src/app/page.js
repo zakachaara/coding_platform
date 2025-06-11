@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { setId } from '../store/slices/teamSlice';
 import { NextResponse } from 'next/server';
 
-export default function Home() {
+export default function LandingPage() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,7 +22,7 @@ export default function Home() {
     setError("");
     const form = e.target;
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/login`, { //use the endpoint of the auth service
+      const response = await fetch(`/api/auth/login`, { //use the endpoint of the auth service
         method: "POST",
         headers: {
           "Content-Type": "application/json",
