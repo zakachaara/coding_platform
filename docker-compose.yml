@@ -1,0 +1,144 @@
+services:
+  competitive-programming-service:
+    build: 
+      context: ./microservices/microservice_CP/
+      dockerfile: Dockerfile
+    image: competitive-programming-service:1
+    container_name: competitive-programming-service
+    restart: unless-stopped
+    ports:
+      - "5005:5005"
+    environment:
+      - NODE_ENV=production
+      - PORT=5005
+      - JUDGE0_URL=${JUDGE0_URL:-http://judge0-v1131-server-1:2358}  # Using service name instead of IP
+      - LAMBDA=0.23
+      - DB_HOST=${DB_HOST:-db-service}  # Reference to linked service
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}  # Consider using secrets for production
+      - DB_NAME=usermanagement
+    depends_on:
+      - db-service
+    networks:
+      - default
+      - judge0-network
+
+  code-enhancement-service:
+    build: 
+      context: ./microservices/microservice_CE/
+      dockerfile: Dockerfile
+    image: code-enhancement-service:1
+    container_name: code-enhancement-service
+    restart: unless-stopped
+    ports:
+      - "5006:5006"
+    environment:
+      - NODE_ENV=production
+      - PORT=5006
+      - JUDGE0_URL=${JUDGE0_URL:-http://judge0-v1131-server-1:2358}  # Using service name instead of IP
+      - LAMBDA=0.23
+      - DB_HOST=${DB_HOST:-db-service}  # Reference to linked service
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}  # Consider using secrets for production
+      - DB_NAME=usermanagement
+    depends_on:
+      - db-service
+    networks:
+      - default
+      - judge0-network
+
+  capture-the-flag-service:
+    build: 
+      context: ./microservices/microservice_CTF/
+      dockerfile: Dockerfile
+    image: capture-the-flag-service:1
+    container_name: capture-the-flag-service
+    restart: unless-stopped
+    ports:
+      - "5007:5007"
+    environment:
+      - NODE_ENV=production
+      - PORT=5007
+      - ENCRYPTION_KEY=123456789987654321234567890110  # Using service name instead of IP
+      - LAMBDA=0.23
+      - DB_HOST=${DB_HOST:-db-service}  # Reference to linked service
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}  # Consider using secrets for production
+      - DB_NAME=usermanagement
+    depends_on:
+      - db-service
+    networks:
+      - default
+
+
+  auth-service-postgres:
+      # build: 
+      #   context: ./path-to-your-auth-service-postgres
+      image: auth-service-postgres:1.1
+      container_name: auth-service-postgres
+      restart: unless-stopped
+      ports:
+        - "8080:8080"
+      environment:
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://db-service:5432/usermanagement
+        - SPRING_DATASOURCE_USERNAME=postgres
+        - SPRING_DATASOURCE_PASSWORD=postgres
+        - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+        - APP_JWT_SECRET=your_secure_jwt_secret_may_be_as_long_as_you_want
+        - APP_CORS_ALLOWED_ORIGINS=http://localhost:80,http://coding-rooms-ui:80
+      # volumes:
+      #   - ./external-config:/config  # Optional: if you want to mount config files
+      depends_on:
+        - db-service
+
+  coding-rooms-ui:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: coding-rooms-ui:1.1
+    container_name: coding-rooms-ui
+    restart: unless-stopped
+    ports:
+      - "80:3000"
+    environment:
+      - NEXT_PUBLIC_ENV=production
+      - NEXT_PUBLIC_AUTHENTICATION_URL=http://auth-service-postgres:8080
+      - NEXT_PUBLIC_SUBMIT_CTF_LINK=http://capture-the-flag-service:5007
+      - NEXT_PUBLIC_CE_SERVICE=http://code-enhancement-service:5006
+      - NEXT_PUBLIC_CP_SERVICE=http://competitive-programming-service:5005
+    volumes:
+      - /app/node_modules
+    depends_on:
+      - competitive-programming-service
+      - code-enhancement-service
+      - capture-the-flag-service
+      - auth-service-postgres
+        
+  db-service:
+    image: postgres:16.2
+    container_name: db-service
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: usermanagement
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # Add your other 2 services here with similar configuration
+networks:
+  default:
+    driver: bridge
+  judge0-network:
+    external: true
+    name: judge0-v1131_default
+volumes:
+  node-problems:
+    driver: local
+  pg-data:
+    driver: local

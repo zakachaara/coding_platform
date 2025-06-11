@@ -13,7 +13,7 @@ RUN npm install --frozen-lockfile
 COPY next.config.mjs .
 COPY public ./public
 COPY src ./src
-COPY .env.local .
+COPY .env .
 COPY jsconfig.json .
 
 # Build the application
@@ -33,7 +33,10 @@ COPY --from=builder /app/public ./public
 # Environment variables (can be overridden in docker-compose)
 ENV NODE_ENV=production
 ENV PORT=3000
-
+ENV NEXT_PUBLIC_SUBMIT_CTF_LINK=http://capture-the-flag-service:5007
+ENV NEXT_PUBLIC_AUTHENTICATION_URL=http://auth-service-postgres:8080
+ENV NEXT_PUBLIC_CE_SERVICE=http://code-enhancement-service:5006
+ENV NEXT_PUBLIC_CP_SERVICE=http://competitive-programming-service:5005
 # Expose the port the app runs on
 EXPOSE $PORT
 
