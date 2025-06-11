@@ -30,7 +30,7 @@ unzip judge0-v1.13.1.zip
 
 ### 1. GRUB Configuration
 
-Make necessary adjustments to your GRUB settings if you're running Ubuntu. This may involve increasing memory limits or enabling virtualization features.
+Make necessary adjustments to your GRUB settings if you're running Ubuntu [Check the official documentation](https://github.com/judge0/judge0/blob/master/CHANGELOG.md#deployment-procedure).
 
 ### 2. Judge0 Environment Variables
 
